@@ -49,7 +49,7 @@ let searchQueue = [],
 	lastSearchTimestamp = null,
 	searchCount = 0;
 
-function processSearchQueue() {
+function processSearchStatQueue() {
 	const queue = searchQueue.slice();
 	window.clearTimeout( searchStackTimer );
 	searchStackTimer = null;
@@ -62,25 +62,26 @@ function processSearchQueue() {
 					continue outerLoop;
 				}
 			}
-			reportSearch( queue[ i ] );
+			reportSearchStats( queue[ i ] );
 		}
 }
 
-function reportSearch( { query, section, timestamp } ) {
+function reportSearchStats( { query, section, timestamp } ) {
 	let timeDiffFromLastSearchInSeconds = 0;
 	if ( lastSearchTimestamp ) {
-		timeDiffFromLastSearchInSeconds = ( timestamp.valueOf() - lastSearchTimestamp.valueOf() ) / 1000;
+		timeDiffFromLastSearchInSeconds = Math.floor( ( timestamp - lastSearchTimestamp ) / 1000 );
 	}
 	lastSearchTimestamp = timestamp;
-	analytics.recordEvent( 'searchFormSubmit', query, section, timeDiffFromLastSearchInSeconds, ++searchCount );
+	searchCount++;
+	analytics.recordEvent( 'searchFormSubmit', query, section, timeDiffFromLastSearchInSeconds, searchCount );
 }
 
-function enqueueSearch( search ) {
+function enqueueSearchStatReport( search ) {
 	searchQueue.push( Object.assign( {}, search, { timestamp: Date.now() } ) );
 	if ( searchStackTimer ) {
 		window.clearTimeout( searchStackTimer );
 	}
-	searchStackTimer = window.setTimeout( processSearchQueue, 10000 );
+	searchStackTimer = window.setTimeout( processSearchStatQueue, 10000 );
 }
 
 const RegisterDomainStep = React.createClass( {
@@ -120,6 +121,7 @@ const RegisterDomainStep = React.createClass( {
 	},
 
 	componentWillMount: function() {
+		searchCount = 0; // reset the counter
 		if ( this.props.selectedSite ) {
 			this.fetchDefaultSuggestions();
 		}
@@ -133,6 +135,7 @@ const RegisterDomainStep = React.createClass( {
 		if ( this.state.lastQuery ) {
 			this.onSearch( this.state.lastQuery );
 		}
+		this.recordEvent( 'searchFormView', this.props.analyticsSection );
 	},
 
 	componentDidUpdate: function( prevProps ) {
@@ -145,7 +148,7 @@ const RegisterDomainStep = React.createClass( {
 
 	componentWillUnmount() {
 		// Don't wait for the timeout if the user is navigating away
-		processSearchQueue();
+		processSearchStatQueue();
 	},
 
 	focusSearchCard: function() {
@@ -274,7 +277,7 @@ const RegisterDomainStep = React.createClass( {
 			return;
 		}
 
-		enqueueSearch( { query: searchQuery, section: this.props.analyticsSection } );
+		enqueueSearchStatReport( { query: searchQuery, section: this.props.analyticsSection } );
 
 		this.setState( {
 			lastDomainSearched: domain,
@@ -293,58 +296,72 @@ const RegisterDomainStep = React.createClass( {
 					if ( ! domain.match( /.{3,}\..{2,}/ ) ) {
 						return callback();
 					}
-
+					const timestamp = Date.now();
 					if ( this.props.isSignupStep && domain.match( /\.wordpress\.com$/ ) ) {
 						return callback();
 					}
 
 					canRegister( domain, ( error, result ) => {
-						if ( error && error.code !== 'domain_registration_unavailable' ) {
+						const timeDiff = Date.now() - timestamp;
+						if ( error ) {
 							this.showValidationErrorMessage( domain, error );
 							this.setState( { lastDomainError: error } );
-						} else if ( result ) {
-							result.domain_name = domain;
+						} else {
+							this.setState( { notice: null } );
+							if ( result ) {
+								result.domain_name = domain;
+							}
 						}
 
-						if ( ( error && ( error.code === 'not_available' || error.code === 'not_available_but_mappable' ) ) ||
-							! error ) {
-							this.setState( { notice: null } );
-						}
+						const analyticsResult = ( error && error.code ) || 'available';
+						this.recordEvent( 'domainAvailabilityReceive', domain, analyticsResult, timeDiff, this.props.analyticsSection );
 
 						this.props.onDomainsAvailabilityChange( true );
-
 						callback( null, result );
 					} );
 				},
 				callback => {
 					const query = {
-						query: domain,
-						quantity: SUGGESTION_QUANTITY,
-						include_wordpressdotcom: this.props.includeWordPressDotCom,
-						vendor: abtest( 'domainSuggestionVendor' )
-					};
+							query: domain,
+							quantity: SUGGESTION_QUANTITY,
+							include_wordpressdotcom: this.props.includeWordPressDotCom,
+							vendor: abtest( 'domainSuggestionVendor' )
+						},
+						timestamp = Date.now();
 
 					domains.suggestions( query ).then( domainSuggestions => {
 						this.props.onDomainsAvailabilityChange( true );
+						const timeDiff = Date.now() - timestamp,
+							analyticsResults = domainSuggestions.map( suggestion => suggestion.domain_name );
+
+						this.recordEvent( 'searchResultsReceive', domain, analyticsResults, timeDiff, domainSuggestions.length,
+							this.props.analyticsSection );
+
 						callback( null, domainSuggestions );
 					} ).catch( error => {
+						const timeDiff = Date.now() - timestamp;
 						if ( error && error.statusCode === 503 ) {
-							return this.props.onDomainsAvailabilityChange( false );
+							this.props.onDomainsAvailabilityChange( false );
 						} else if ( error && error.error ) {
 							error.code = error.error;
 							this.showValidationErrorMessage( domain, error );
 						}
+
+						const analyticsResults = [ error.code || error.error || 'ERROR' + ( error.statusCode || '' ) ];
+						this.recordEvent( 'searchResultsReceive', domain, analyticsResults, timeDiff, -1, this.props.analyticsSection );
 						callback( error, null );
+
 					} );
 				}
 			],
 			( error, result ) => {
-				if ( ! this.state.loadingResults || domain !== this.state.lastDomainSearched ) {
-					// this callback is irrelevant now, a newer search has been made or the results were cleared
+				if ( ! this.state.loadingResults || domain !== this.state.lastDomainSearched || ! this.isMounted() ) {
+					// this callback is irrelevant now, a newer search has been made or the results were cleared OR
+					// domain registration was not available and component is unmounted
 					return;
 				}
 
-				suggestions = uniqBy( flatten( compact( result ) ), function( suggestion ) {
+				const suggestions = uniqBy( flatten( compact( result ) ), function( suggestion ) {
 					return suggestion.domain_name;
 				} );
 
@@ -531,7 +548,10 @@ const RegisterDomainStep = React.createClass( {
 				break;
 			case 'not_available':
 			case 'not_available_but_mappable':
-				// unavailable domains are displayed in the search results, not as a notice
+			case 'domain_registration_unavailable':
+				// unavailable domains are displayed in the search results, not as a notice OR
+				// domain registrations are closed, in which case it is handled in parent
+				message = null;
 				break;
 
 			case 'mappable_but_blacklisted_domain':
@@ -569,6 +589,7 @@ const RegisterDomainStep = React.createClass( {
 			case 'server_error':
 				message = this.translate( 'Sorry but there was a problem processing your request. Please try again in a few minutes.' );
 				break;
+
 
 			default:
 				throw new Error( 'Unrecognized error code: ' + error.code );

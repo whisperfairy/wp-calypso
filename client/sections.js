@@ -214,6 +214,14 @@ if ( config.isEnabled( 'reader' ) ) {
 	} );
 
 	sections.push( {
+		name: 'reader-post-recomendations',
+		paths: [ '/recommendations/posts' ],
+		module: 'reader/recommendations',
+		secondary: true,
+		group: 'reader'
+	} );
+
+	sections.push( {
 		name: 'reader-recomendations',
 		paths: [ '/recommendations' ],
 		module: 'reader/recommendations',
@@ -268,6 +276,16 @@ if ( config.isEnabled( 'reader' ) ) {
 		secondary: true,
 		group: 'reader'
 	} );
+
+	if ( config.isEnabled( 'reader/start' ) ) {
+		sections.push( {
+			name: 'reader-start',
+			paths: [ '/read/start' ],
+			module: 'reader/start',
+			secondary: true,
+			group: 'reader'
+		} );
+	}
 }
 
 if ( config.isEnabled( 'devdocs' ) ) {

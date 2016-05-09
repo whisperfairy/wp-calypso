@@ -979,6 +979,12 @@ Undocumented.prototype.readTagPosts = function( query, fn ) {
 	this.wpcom.req.get( '/read/tags/' + encodeURIComponent( query.tag ) + '/posts', params, fn );
 };
 
+Undocumented.prototype.readRecommendedPosts = function( query, fn ) {
+	debug( '/recommendations/posts' );
+	query.apiVersion = '1.2';
+	this.wpcom.req.get( '/read/recommendations/warm-start', query, fn );
+};
+
 Undocumented.prototype.followReaderTag = function( tag, fn ) {
 	debug( '/read/tags/' + tag + '/mine/new' );
 	this.wpcom.req.post( '/read/tags/' + tag + '/mine/new', fn );
@@ -1847,6 +1853,24 @@ Undocumented.prototype.importReaderFeed = function( file, fn ) {
 		apiVersion: '1.2',
 	};
 	return this.wpcom.req.post( params, query, null, fn );
+};
+
+/**
+ * Creates a Push Notification registration for the device
+ *
+ * @param {String}     registration   The registration to be stored
+ * @param {String}     deviceFamily   The device family
+ * @param {String}     deviceName     The device name
+ * @param {Function}   fn             The callback function
+ * @returns {XMLHttpRequest}          The XHR instance
+ */
+Undocumented.prototype.registerDevice = function( registration, deviceFamily, deviceName, fn ) {
+	debug( '/devices/new' );
+	return this.wpcom.req.post( { path: '/devices/new' }, {}, {
+		device_token: registration,
+		device_family: deviceFamily,
+		device_name: deviceName
+	}, fn );
 };
 
 /**

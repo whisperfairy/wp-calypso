@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
  * Internal dependencies
  */
 const EditorFieldset = require( 'post-editor/editor-fieldset' ),
-	FormCheckbox = require( 'components/forms/form-checkbox' ),
+	Checkbox = require( 'components/checkbox' ),
 	PostActions = require( 'lib/posts/actions' ),
 	stats = require( 'lib/posts/stats' );
 import { setSharingLikeOption } from 'state/ui/editor/post/actions';
@@ -63,7 +63,7 @@ const SharingLikeOptions = React.createClass( {
 
 		return (
 			<label>
-				<FormCheckbox
+				<Checkbox
 					name='sharing_enabled'
 					checked={ this.isShowingSharingButtons() }
 					onChange={ this.onChange } />
@@ -79,7 +79,7 @@ const SharingLikeOptions = React.createClass( {
 
 		return (
 				<label>
-					<FormCheckbox
+					<Checkbox
 						name='likes_enabled'
 						checked={ this.isShowingLikeButton() }
 						onChange={ this.onChange } />

@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 /**
  * Internal dependencies
  */
-import FormCheckbox from 'components/forms/form-checkbox';
+import Checkbox from 'components/checkbox';
 import PostMetadata from 'lib/post-metadata';
 import PostActions from 'lib/posts/actions';
 import * as PostStats from 'lib/posts/stats';
@@ -106,7 +106,7 @@ const EditorSharingPublicizeConnection = React.createClass( {
 		return (
 			<div className="editor-sharing__publicize-connection">
 				<label>
-					<FormCheckbox
+					<Checkbox
 						checked={ ! this.isConnectionSkipped() }
 						disabled={ this.isDisabled() }
 						onChange={ this.onChange } />

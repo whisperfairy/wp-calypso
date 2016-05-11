@@ -14,6 +14,7 @@ import paths from 'my-sites/upgrades/paths';
 import { hasDomainCredit } from 'state/sites/plans/selectors';
 import { recordTracksEvent } from 'state/analytics/actions';
 import QuerySitePlans from 'components/data/query-site-plans';
+import { isFinished as isJetpackPluginsFinished } from 'state/plugins/premium/selectors';
 import { abtest } from 'lib/abtest';
 import TrackComponentView from 'lib/analytics/track-component-view';
 
@@ -82,6 +83,24 @@ const SiteNotice = React.createClass( {
 		);
 	},
 
+	jetpackPluginsSetupNotice() {
+		if ( ! this.props.pausedJetpackPluginsSetup || this.props.site.plan.product_slug === 'jetpack_free' ) {
+			return null;
+		}
+
+		return (
+			<Notice isCompact status="is-info" icon="plugins">
+				{ this.translate(
+					'Your %(plan)s plan needs setting up!',
+					{ args: { plan: this.props.site.plan.product_name_short } }
+				) }
+				<NoticeAction href={ `/plugins/setup/${ this.props.site.slug }` } >
+					{ this.translate( 'Finish' ) }
+				</NoticeAction>
+			</Notice>
+		);
+	},
+
 	render() {
 		const { site } = this.props;
 		if ( ! site ) {
@@ -92,6 +111,7 @@ const SiteNotice = React.createClass( {
 				{ this.getSiteRedirectNotice( site ) }
 				<QuerySitePlans siteId={ site.ID } />
 				{ this.domainCreditNotice() }
+				{ this.jetpackPluginsSetupNotice() }
 			</div>
 		);
 	}
@@ -99,7 +119,8 @@ const SiteNotice = React.createClass( {
 
 export default connect( ( state, ownProps ) => {
 	return {
-		hasDomainCredit: !! ownProps.site && hasDomainCredit( state, ownProps.site.ID )
+		hasDomainCredit: !! ownProps.site && hasDomainCredit( state, ownProps.site.ID ),
+		pausedJetpackPluginsSetup: !! ownProps.site && ownProps.site.jetpack && ! isJetpackPluginsFinished( state, ownProps.site.ID )
 	};
 }, ( dispatch ) => {
 	return {

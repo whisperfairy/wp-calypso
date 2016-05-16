@@ -11,7 +11,7 @@ import { isSectionLoading } from 'state/ui/selectors';
 import createSelector from 'lib/create-selector';
 import guidedToursConfig from 'layout/guided-tours/config';
 
-const getToursConfig = memoize( () => guidedToursConfig.get() );
+const getToursConfig = memoize( ( tour ) => guidedToursConfig.get( tour ) );
 
 /**
  * Returns the current state for Guided Tours.
@@ -28,8 +28,8 @@ const getRawGuidedTourState = state => get( state, 'ui.guidedTour', false );
 export const getGuidedTourState = createSelector(
 	state => {
 		const tourState = getRawGuidedTourState( state );
-		const { shouldReallyShow, stepName = '' } = tourState;
-		const stepConfig = getToursConfig()[ stepName ] || false;
+		const { shouldReallyShow, stepName = '', tour } = tourState;
+		const stepConfig = getToursConfig( tour )[ stepName ] || false;
 		return Object.assign( {}, tourState, {
 			stepConfig,
 			shouldShow: !!( ! isSectionLoading( state ) && shouldReallyShow ),

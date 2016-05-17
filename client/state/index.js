@@ -29,6 +29,7 @@ import support from './support/reducer';
 import themes from './themes/reducer';
 import ui from './ui/reducer';
 import users from './users/reducer';
+import preferences from './preferences/reducer';
 
 /**
  * Module variables
@@ -43,6 +44,7 @@ export const reducer = combineReducers( {
 	notices,
 	plugins,
 	plans,
+	preferences,
 	preview,
 	posts,
 	postTypes,

@@ -35,7 +35,6 @@ const actions = require( 'lib/posts/actions' ),
 	titleActions = require( 'lib/screen-title/actions' ),
 	observe = require( 'lib/mixins/data-observe' ),
 	DraftList = require( 'my-sites/drafts/draft-list' ),
-	PreferencesActions = require( 'lib/preferences/actions' ),
 	InvalidURLDialog = require( 'post-editor/invalid-url-dialog' ),
 	RestorePostDialog = require( 'post-editor/restore-post-dialog' ),
 	utils = require( 'lib/posts/utils' ),
@@ -59,7 +58,10 @@ import {
 import { setEditorLastDraft, resetEditorLastDraft } from 'state/ui/editor/last-draft/actions';
 import { isEditorDraftsVisible } from 'state/ui/editor/selectors';
 import { toggleEditorDraftsVisible } from 'state/ui/editor/actions';
+import { setPreference } from 'state/preferences/actions';
+import { getPreference } from 'state/preferences/selectors';
 import EditorSidebarHeader from 'post-editor/editor-sidebar/header';
+import QueryPreferences from 'components/data/query-preferences';
 
 const messages = {
 	post: {
@@ -352,6 +354,7 @@ const PostEditor = React.createClass( {
 										/>
 									: null
 								}
+								<QueryPreferences/>
 								<SegmentedControl className="editor__switch-mode" compact={ true }>
 									<SegmentedControlItem
 										selected={ mode === 'tinymce' }
@@ -854,18 +857,11 @@ const PostEditor = React.createClass( {
 	},
 
 	getEditorMode: function() {
-		var editorMode = 'tinymce'
-		if ( this.props.preferences ) {
-			if ( this.props.preferences[ 'editor-mode' ] ) {
-				editorMode = this.props.preferences[ 'editor-mode' ];
-			}
-
-			if ( ! this.recordedDefaultEditorMode ) {
-				analytics.mc.bumpStat( 'calypso_default_editor_mode', editorMode );
-				this.recordedDefaultEditorMode = true;
-			}
+		const editorMode = this.props.editorModePreference || 'tinymce';
+		if ( ! this.recordedDefaultEditorMode ) {
+			analytics.mc.bumpStat( 'calypso_default_editor_mode', editorMode );
+			this.recordedDefaultEditorMode = true;
 		}
-
 		return editorMode;
 	},
 
@@ -876,7 +872,7 @@ const PostEditor = React.createClass( {
 			this.refs.editor.setEditorContent( content );
 		}
 
-		PreferencesActions.set( 'editor-mode', mode );
+		this.props.setPreference( 'editor-mode', mode );
 
 		// Defer actions until next available tick to avoid
 		// dispatching inside a dispatch which can happen if for example the
@@ -905,7 +901,8 @@ const PostEditor = React.createClass( {
 export default connect(
 	( state ) => {
 		return {
-			showDrafts: isEditorDraftsVisible( state )
+			showDrafts: isEditorDraftsVisible( state ),
+			editorModePreference: getPreference( state, 'editor-mode' )
 		};
 	},
 	( dispatch ) => {
@@ -922,7 +919,8 @@ export default connect(
 			setPostPublished,
 			resetRawContent,
 			setEditorLastDraft,
-			resetEditorLastDraft
+			resetEditorLastDraft,
+			setPreference
 		}, dispatch );
 	},
 	null,

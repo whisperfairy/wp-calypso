@@ -46,7 +46,8 @@ const actions = require( 'lib/posts/actions' ),
 
 import { setEditorLastDraft, resetEditorLastDraft } from 'state/ui/editor/last-draft/actions';
 import { isEditorDraftsVisible } from 'state/ui/editor/selectors';
-import { toggleEditorDraftsVisible } from 'state/ui/editor/actions';
+import { toggleEditorDraftsVisible, setEditorPostId } from 'state/ui/editor/actions';
+import { receivePost, editPost, resetPostEdits } from 'state/posts/actions';
 import EditorSidebarHeader from 'post-editor/editor-sidebar/header';
 
 const messages = {
@@ -782,6 +783,15 @@ const PostEditor = React.createClass( {
 			this.props.resetEditorLastDraft();
 		}
 
+		// Reset previous edits, preserving type
+		this.props.resetPostEdits( post.site_ID );
+		this.props.resetPostEdits( post.site_ID, post.ID );
+		this.props.editPost( { type: this.props.type }, post.site_ID, post.ID );
+
+		// Assign editor post ID to saved value (especially important when
+		// transitioning from an unsaved post to a saved one)
+		this.props.setEditorPostId( post.ID );
+
 		// make sure the history entry has the post ID in it, but don't dispatch
 		page.replace(
 			basePath + '/' + this.props.sites.getSite( post.site_ID ).slug + '/' + post.ID,
@@ -863,7 +873,11 @@ export default connect(
 		return bindActionCreators( {
 			toggleDrafts: toggleEditorDraftsVisible,
 			setEditorLastDraft,
-			resetEditorLastDraft
+			resetEditorLastDraft,
+			receivePost,
+			editPost,
+			resetPostEdits,
+			setEditorPostId
 		}, dispatch );
 	},
 	null,

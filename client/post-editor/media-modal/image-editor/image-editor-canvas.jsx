@@ -143,6 +143,11 @@ const MediaModalImageEditorCanvas = React.createClass( {
 		context.restore();
 	},
 
+	preventDrag( event ) {
+		event.preventDefault();
+		return false;
+	},
+
 	renderCrop() {
 		if ( ! this.props.src ) {
 			return;
@@ -157,6 +162,7 @@ const MediaModalImageEditorCanvas = React.createClass( {
 				{ this.renderCrop() }
 				<canvas
 					ref="canvas"
+					onMouseDown={ this.preventDrag }
 					className="editor-media-modal-image-editor__canvas" />
 			</div>
 		);

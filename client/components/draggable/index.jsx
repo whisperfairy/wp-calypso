@@ -59,6 +59,8 @@ export default React.createClass( {
 	},
 
 	onMouseDown( event ) {
+		event.preventDefault();
+
 		document.addEventListener( 'mousemove', this.onMouseMove );
 		document.addEventListener( 'mouseup', this.onMouseUp );
 
@@ -88,7 +90,7 @@ export default React.createClass( {
 			}
 
 			this.setState( { x, y } );
-		});
+		} );
 	},
 
 	onMouseUp() {

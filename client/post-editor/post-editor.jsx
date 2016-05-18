@@ -47,7 +47,7 @@ const actions = require( 'lib/posts/actions' ),
 
 import { setEditorLastDraft, resetEditorLastDraft } from 'state/ui/editor/last-draft/actions';
 import { isEditorDraftsVisible, getEditorPostId } from 'state/ui/editor/selectors';
-import { toggleEditorDraftsVisible } from 'state/ui/editor/actions';
+import { toggleEditorDraftsVisible, setEditorPostId } from 'state/ui/editor/actions';
 import { getSelectedSiteId } from 'state/ui/selectors';
 import { receivePost, editPost, resetPostEdits } from 'state/posts/actions';
 import { getPostEdits, isEditedPostDirty, getEditedPostValue } from 'state/posts/selectors';
@@ -806,6 +806,7 @@ const PostEditor = React.createClass( {
 		this.props.receivePost( post );
 		this.props.resetPostEdits( post.site_ID );
 		this.props.resetPostEdits( post.site_ID, post.ID );
+		this.props.setEditorPostId( post.ID );
 		this.props.editPost( { type: this.props.type }, post.site_ID, post.ID );
 
 		// make sure the history entry has the post ID in it, but don't dispatch
@@ -898,7 +899,8 @@ export default connect(
 			resetEditorLastDraft,
 			receivePost,
 			editPost,
-			resetPostEdits
+			resetPostEdits,
+			setEditorPostId
 		}, dispatch );
 	},
 	null,

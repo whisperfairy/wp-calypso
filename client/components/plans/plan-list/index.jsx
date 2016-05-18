@@ -7,6 +7,7 @@ import times from 'lodash/times';
 /**
  * Internal dependencies
  */
+import { isEnabled } from 'config';
 import Card from 'components/card';
 import { filterPlansBySiteAndProps } from 'lib/plans';
 import { getCurrentPlan } from 'lib/plans';
@@ -27,7 +28,7 @@ const PlanList = React.createClass( {
 		const { site, hideFreePlan, plans, showJetpackFreePlan } = this.props;
 
 		let className = '',
-			numberOfPlaceholders = 3;
+			numberOfPlaceholders = isEnabled( 'upgrades/personal-plan' ) ? 4 : 3;
 
 		if ( hideFreePlan || ( site && site.jetpack ) ) {
 			numberOfPlaceholders = showJetpackFreePlan ? 3 : 2;
@@ -78,6 +79,10 @@ const PlanList = React.createClass( {
 			const filteredPlans = filterPlansBySiteAndProps( plans, site, hideFreePlan, showJetpackFreePlan );
 
 			plansList = filteredPlans.map( plan => {
+				if ( ! isEnabled( 'upgrades/personal-plan' ) && plan.product_slug === 'personal-bundle' ) {
+					return null;
+				}
+
 				return (
 					<Plan
 						plan={ plan }

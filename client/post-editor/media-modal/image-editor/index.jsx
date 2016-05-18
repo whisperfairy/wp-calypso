@@ -76,11 +76,8 @@ const MediaModalImageEditor = React.createClass( {
 	},
 
 	onImageExtracted( blob ) {
-		const extension = MediaUtils.getFileExtensionFromMimeType( blob.type ) || 'png';
-		const fileName = this.props.fileName.replace( /\.[^.]+$/, '' ) + '.' + extension;
-
 		MediaActions.add( this.props.site.ID, {
-			fileName,
+			fileName: this.props.fileName,
 			fileContents: blob,
 			mimeType: blob.type
 		} );

@@ -242,7 +242,7 @@ const PostEditor = React.createClass( {
 		PostEditStore.on( 'change', this.onEditedPostChange );
 		this.debouncedSaveRawContent = debounce( this.saveRawContent, 200 );
 		this.debouncedAutosave = debounce( throttle( this.autosave, 20000 ), 3000 );
-		this.recordedDefaultEditorMode = false;
+		this.recordedDefaultEditorModeFromPreferences = false;
 		this.switchEditorVisualMode = this.switchEditorMode.bind( this, 'tinymce' );
 		this.switchEditorHtmlMode = this.switchEditorMode.bind( this, 'html' );
 	},
@@ -857,12 +857,11 @@ const PostEditor = React.createClass( {
 	},
 
 	getEditorMode: function() {
-		const editorMode = this.props.editorModePreference || 'tinymce';
-		if ( ! this.recordedDefaultEditorMode ) {
-			analytics.mc.bumpStat( 'calypso_default_editor_mode', editorMode );
-			this.recordedDefaultEditorMode = true;
+		if ( this.props.editorModePreference && ! this.recordedDefaultEditorModeFromPreferences ) {
+			analytics.mc.bumpStat( 'calypso_default_editor_mode', this.props.editorModePreference );
+			this.recordedDefaultEditorModeFromPreferences = true;
 		}
-		return editorMode;
+		return ( this.props.editorModePreference || 'tinymce' );
 	},
 
 	switchEditorMode: function( mode ) {

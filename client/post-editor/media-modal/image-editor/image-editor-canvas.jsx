@@ -24,25 +24,33 @@ const MediaModalImageEditorCanvas = React.createClass( {
 	propTypes: {
 		src: React.PropTypes.string,
 		mimeType: React.PropTypes.string,
-		degrees: React.PropTypes.number,
-		scaleX: React.PropTypes.number,
-		scaleY: React.PropTypes.number,
-		cropTopRatio: React.PropTypes.number,
-		cropLeftRatio: React.PropTypes.number,
-		cropWidthRatio: React.PropTypes.number,
-		cropHeightRatio: React.PropTypes.number,
+		transfrom: React.PropTypes.shape( {
+			degrees: React.PropTypes.number,
+			scaleX: React.PropTypes.number,
+			scaleY: React.PropTypes.number
+		} ),
+		crop: React.PropTypes.shape( {
+			topRatio: React.PropTypes.number,
+			leftRatio: React.PropTypes.number,
+			widthRatio: React.PropTypes.number,
+			heightRatio: React.PropTypes.number,
+		} ),
 		setImageEditorCropBounds: React.PropTypes.func
 	},
 
 	getDefaultProps() {
 		return {
-			degrees: 0,
-			scaleX: 1,
-			scaleY: 1,
-			cropTopRatio: 0,
-			cropLeftRatio: 0,
-			cropWidthRatio: 1,
-			cropHeightRatio: 1,
+			transform: {
+				degrees: 0,
+				scaleX: 1,
+				scaleY: 1,
+			},
+			crop: {
+				cropTopRatio: 0,
+				cropLeftRatio: 0,
+				cropWidthRatio: 1,
+				cropHeightRatio: 1,
+			},
 			setImageEditorCropBounds: noop
 		};
 	},
@@ -50,6 +58,7 @@ const MediaModalImageEditorCanvas = React.createClass( {
 	componentWillReceiveProps( newProps ) {
 		if ( this.props.src !== newProps.src ) {
 			this.initImage( newProps.src );
+			return;
 		}
 	},
 
@@ -83,13 +92,13 @@ const MediaModalImageEditorCanvas = React.createClass( {
 	toBlob( callback ) {
 		const canvas = ReactDom.findDOMNode( this.refs.canvas );
 		const context = canvas.getContext( '2d' );
-		const rotated = this.props.degrees % 180 !== 0;
+		const rotated = this.props.transform.degrees % 180 !== 0;
 		const imageWidth = rotated ? this.image.height : this.image.width;
 		const imageHeight = rotated ? this.image.width : this.image.height;
-		const croppedLeft = this.props.cropLeftRatio * imageWidth;
-		const croppedTop = this.props.cropTopRatio * imageHeight;
-		const croppedWidth = this.props.cropWidthRatio * imageWidth;
-		const croppedHeight = this.props.cropHeightRatio * imageHeight;
+		const croppedLeft = this.props.crop.leftRatio * imageWidth;
+		const croppedTop = this.props.crop.topRatio * imageHeight;
+		const croppedWidth = this.props.crop.widthRatio * imageWidth;
+		const croppedHeight = this.props.crop.heightRatio * imageHeight;
 		const imageData = context.getImageData(
 			croppedLeft,
 			croppedTop,
@@ -114,29 +123,39 @@ const MediaModalImageEditorCanvas = React.createClass( {
 		const canvas = ReactDom.findDOMNode( this.refs.canvas );
 		const imageWidth = this.image.width;
 		const imageHeight = this.image.height;
-		const rotated = this.props.degrees % 180 !== 0;
+		const transform = this.props.transform;
+		const rotated = transform.degrees % 180 !== 0;
 
 		//make sure the canvas draw area is the same size as the image
 		canvas.width = rotated ? imageHeight : imageWidth;
 		canvas.height = rotated ? imageWidth : imageHeight;
 
+		const canvasX = - 50 * this.props.crop.widthRatio - 100 * this.props.crop.leftRatio;
+		const canvasY = - 50 * this.props.crop.heightRatio - 100 * this.props.crop.topRatio;
+
+		canvas.style.top = 50 + '%';
+		canvas.style.left = 50 + '%';
+		canvas.style.transform = 'translate(' + canvasX + '%, ' + canvasY + '%)';
+		canvas.style.maxWidth = ( 95 / this.props.crop.widthRatio ) + '%';
+		canvas.style.maxHeight = ( 95 / this.props.crop.heightRatio ) + '%';
+
 		this.props.setImageEditorCropBounds(
-			canvas.offsetTop - canvas.offsetHeight / 2,
-			canvas.offsetLeft - canvas.offsetWidth / 2,
-			canvas.offsetTop + canvas.offsetHeight / 2,
-			canvas.offsetLeft + canvas.offsetWidth / 2 );
+			canvas.offsetTop - canvas.offsetHeight * -canvasY / 100,
+			canvas.offsetLeft - canvas.offsetWidth * -canvasX / 100,
+			canvas.offsetTop + canvas.offsetHeight * ( 1 + canvasY / 100 ),
+			canvas.offsetLeft + canvas.offsetWidth * ( 1 + canvasX / 100 ) );
 
 		const context = canvas.getContext( '2d' );
 
 		context.clearRect( 0, 0, canvas.width, canvas.height );
 		context.save();
 
-		//setTransform() could be replaced with translate(), but it leads to
-		//a false positive warning from eslint rule wpcalypso/i18n-no-variables
+		// setTransform() could be replaced with translate(), but it leads to
+		// a false positive warning from eslint rule wpcalypso/i18n-no-variables
 		context.setTransform( 1, 0, 0, 1, canvas.width / 2, canvas.height / 2 );
 
-		context.scale( this.props.scaleX, this.props.scaleY );
-		context.rotate( this.props.degrees * Math.PI / 180 );
+		context.scale( transform.scaleX, transform.scaleY );
+		context.rotate( transform.degrees * Math.PI / 180 );
 
 		context.drawImage( this.image, -imageWidth / 2, -imageHeight / 2 );
 
@@ -171,20 +190,15 @@ const MediaModalImageEditorCanvas = React.createClass( {
 
 export default connect(
 	( state ) => {
-		const { degrees, scaleX, scaleY } = getImageEditorTransform( state ),
-			{ src, mimeType } = getImageEditorFileInfo( state ),
-			{ topRatio, leftRatio, widthRatio, heightRatio } = getImageEditorCrop( state );
+		const transform = getImageEditorTransform( state );
+		const { src, mimeType } = getImageEditorFileInfo( state );
+		const crop = getImageEditorCrop( state );
 
 		return {
 			src,
 			mimeType,
-			degrees,
-			scaleX,
-			scaleY,
-			cropTopRatio: topRatio,
-			cropLeftRatio: leftRatio,
-			cropWidthRatio: widthRatio,
-			cropHeightRatio: heightRatio
+			transform,
+			crop
 		};
 	},
 	{ setImageEditorCropBounds },

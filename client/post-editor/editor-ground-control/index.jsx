@@ -18,6 +18,7 @@ const Card = require( 'components/card' ),
 	StatusLabel = require( 'post-editor/editor-status-label' ),
 	postUtils = require( 'lib/posts/utils' ),
 	siteUtils = require( 'lib/site/utils' ),
+	userUtils = require( 'lib/user/utils' ),
 	PostSchedule = require( 'components/post-schedule' ),
 	postActions = require( 'lib/posts/actions' ),
 	Tooltip = require( 'components/tooltip' ),
@@ -37,6 +38,7 @@ const EditorGroundControl = React.createClass( {
 		onPreview: React.PropTypes.func,
 		onPublish: React.PropTypes.func,
 		onSaveDraft: React.PropTypes.func,
+		onMoreInfoAboutEmailVerify: React.PropTypes.func,
 		post: React.PropTypes.object,
 		setDate: React.PropTypes.func,
 		savedPost: React.PropTypes.object,
@@ -404,6 +406,15 @@ const EditorGroundControl = React.createClass( {
 						this.schedulePostPopover()
 					}
 				</div>
+				{
+					userUtils.needsVerificationForSite( this.props.site ) &&
+					<div className="editor-ground-control__email-verification-notice" tabIndex={ 7 } onClick={ this.props.onMoreInfoAboutEmailVerify }>
+						<Gridicon
+							icon="info"
+							className="editor-ground-control__email-verification-notice-icon" />
+						{ this.translate( 'You must verify your email address before you can publish.' ) }
+					</div>
+				}
 			</Card>
 		);
 	}

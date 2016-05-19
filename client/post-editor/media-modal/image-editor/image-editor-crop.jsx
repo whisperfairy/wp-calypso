@@ -215,6 +215,42 @@ const MediaModalImageEditorCrop = React.createClass( {
 
 		return (
 			<div>
+				<div
+					className="editor-media-modal-image-editor__crop-background"
+					style={ {
+						top: this.props.bounds.topBound + 'px',
+						left: left + 'px',
+						width: width + 'px',
+						height: top - this.props.bounds.topBound + 'px'
+					} }>
+				</div>
+				<div
+					className="editor-media-modal-image-editor__crop-background"
+					style={ {
+						top: this.props.bounds.topBound + 'px',
+						left: this.props.bounds.leftBound + 'px',
+						width: left - this.props.bounds.leftBound + 'px',
+						height: this.props.bounds.bottomBound - this.props.bounds.topBound + 'px'
+					} }>
+				</div>
+				<div
+					className="editor-media-modal-image-editor__crop-background"
+					style={ {
+						top: bottom + 'px',
+						left: left + 'px',
+						width: width + 'px',
+						height: this.props.bounds.bottomBound - bottom + 'px'
+					} }>
+				</div>
+				<div
+					className="editor-media-modal-image-editor__crop-background"
+					style={ {
+						top: this.props.bounds.topBound + 'px',
+						left: right + 'px',
+						width: this.props.bounds.rightBound - right + 'px',
+						height: this.props.bounds.bottomBound - this.props.bounds.topBound + 'px'
+					} }>
+				</div>
 				<Draggable
 					ref="border"
 					onDrag={ this.onBorderDrag }

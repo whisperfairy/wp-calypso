@@ -51,6 +51,13 @@
 	cursor: move;
 }
 
+.editor-media-modal-image-editor__crop-background {
+	position: absolute;
+	background: darken($gray, 52%);
+	opacity: 0.5;
+	z-index: z-index( '.dialog__backdrop', '.editor-media-modal-image-editor__crop-background' );
+}
+
 .editor-media-modal-image-editor__crop-handle {
 	position: absolute;
 	width: 8px;

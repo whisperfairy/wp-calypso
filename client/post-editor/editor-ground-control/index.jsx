@@ -23,7 +23,11 @@ const Card = require( 'components/card' ),
 	postActions = require( 'lib/posts/actions' ),
 	Tooltip = require( 'components/tooltip' ),
 	PostListFetcher = require( 'components/post-list-fetcher' ),
-	stats = require( 'lib/posts/stats' );
+	stats = require( 'lib/posts/stats' ),
+	user = require( 'lib/user' )();
+
+const VERIFICATION_POLL_INTERVAL = 15000;
+
 import { setDate } from 'state/ui/editor/post/actions';
 
 const EditorGroundControl = React.createClass( {
@@ -63,6 +67,43 @@ const EditorGroundControl = React.createClass( {
 			setDate: () => {},
 			site: {}
 		};
+	},
+
+	componentDidMount: function() {
+		if ( userUtils.needsVerificationForSite( this.props.site ) ) {
+			this.pollForVerification();
+		}
+	},
+
+	pollForVerification: function() {
+		let serverPoll;
+		let check = ( signal ) => {
+			// skip server poll if page is in the background
+			// and this was not triggered by a signal
+			if ( document.hidden && !signal ) {
+				return;
+			}
+
+			user.once( 'change', () => {
+				if ( !userUtils.needsVerificationForSite( this.props.site ) ) {
+					// email verification took place
+					this.forceUpdate();
+					clearInterval( serverPoll );
+				}
+			} );
+
+			user.fetch();
+		};
+
+		serverPoll = setInterval( check, VERIFICATION_POLL_INTERVAL );
+
+		// wait for localStorage event (from other windows)
+		window.addEventListener( 'storage', ( e ) => {
+			if ( e.key === '__email_verified_signal__' && e.newValue ) {
+				window.localStorage.removeItem( '__email_verified_signal__' );
+				check( true );
+			}
+		} );
 	},
 
 	getInitialState: function() {

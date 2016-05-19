@@ -322,6 +322,7 @@ const PostEditor = React.createClass( {
 		}
 		return (
 			<div className="post-editor">
+				<QueryPreferences/>
 				<div className="post-editor__inner">
 					<div className="post-editor__content">
 						<EditorMobileNavigation site={ site } onClose={ this.onClose } />
@@ -354,7 +355,6 @@ const PostEditor = React.createClass( {
 										/>
 									: null
 								}
-								<QueryPreferences/>
 								<SegmentedControl className="editor__switch-mode" compact={ true }>
 									<SegmentedControlItem
 										selected={ mode === 'tinymce' }

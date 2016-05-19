@@ -89,8 +89,7 @@ const Search = React.createClass( {
 				? debounce( this.props.onSearch, this.props.delayTimeout )
 				: this.props.onSearch;
 		}
-
-		if ( nextProps.isOpen ) {
+		if ( nextProps.isOpen !== this.props.isOpen ) {
 			this.setState( { isOpen: nextProps.isOpen } );
 		}
 	},
@@ -173,27 +172,24 @@ const Search = React.createClass( {
 	},
 
 	closeSearch: function( event ) {
-		var input;
-
 		event.preventDefault();
 
 		if ( this.props.disabled ) {
 			return;
 		}
 
-		input = ReactDom.findDOMNode( this.refs.searchInput );
+		if ( this.props.pinned ) {
+			ReactDom.findDOMNode( this.refs.openIcon ).focus();
+		}
+
+		const input = ReactDom.findDOMNode( this.refs.searchInput );
+		input.value = ''; // will not trigger onChange
+		input.blur();
 
 		this.setState( {
 			keyword: '',
 			isOpen: this.props.isOpen || false
 		} );
-
-		input.value = ''; // will not trigger onChange
-		input.blur();
-
-		if ( this.props.pinned ) {
-			ReactDom.findDOMNode( this.refs.openIcon ).focus();
-		}
 
 		this.props.onSearchClose();
 
@@ -201,13 +197,9 @@ const Search = React.createClass( {
 	},
 
 	keyUp: function( event ) {
-		if ( event.which === 13 && isMobile() ) {
+		if ( event.key === 'Enter' && isMobile() ) {
 			//dismiss soft keyboards
 			this.blur();
-		}
-
-		if ( ! this.props.pinned ) {
-			return;
 		}
 
 		if ( event.key === 'Escape' ) {
@@ -238,9 +230,8 @@ const Search = React.createClass( {
 			placeholder = this.props.placeholder ||
 				i18n.translate( 'Search…', { textOnly: true } ),
 
-			enableOpenIcon = this.props.pinned && ! this.state.isOpen,
-			isOpenUnpinnedOrQueried = this.state.isOpen ||
-				! this.props.pinned ||
+			enableOpenIcon = ! this.state.isOpen,
+			isOpenOrQueried = this.state.isOpen ||
 				this.props.initialValue;
 
 		const autocorrect = this.props.disableAutocorrect && {
@@ -251,7 +242,7 @@ const Search = React.createClass( {
 
 		searchClass = classNames( this.props.additionalClasses, {
 			'is-pinned': this.props.pinned,
-			'is-open': isOpenUnpinnedOrQueried,
+			'is-open': isOpenOrQueried,
 			'is-searching': this.props.searching,
 			search: true
 		} );
@@ -285,10 +276,10 @@ const Search = React.createClass( {
 					onFocus={ this.onFocus }
 					onBlur={ this.onBlur }
 					disabled={ this.props.disabled }
-					aria-hidden={ ! isOpenUnpinnedOrQueried }
+					aria-hidden={ ! isOpenOrQueried }
 					autoCapitalize="none"
 					{...autocorrect } />
-				{ ( searchValue || this.state.isOpen ) ? this.closeButton() : null }
+				{ ( this.state.isOpen && searchValue ) ? this.closeButton() : null }
 			</div>
 		);
 	},

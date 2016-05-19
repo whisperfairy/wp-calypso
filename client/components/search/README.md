@@ -26,7 +26,10 @@ Use this prop to delay the `onSearch` callback until after the user has stopped 
 If `delaySearch` is true, this prop can be used to control the number of milliseconds used to determine when the user has stopped typing. It's a good idea to leave this at its default value unless there's a specific reason to change the timeout (e.g., a very expensive search may benefit from a longer timeout).
 
 ### pinned (optional)
-Whether to display the search input from collapsed by default and pinned to the right of its container. If not set, the search input will show as already expanded.
+Whether to display the search input form pinned to the right of its container. NOTE: "Always Open" functionality is now controlled by the `isOpen` prop.
+
+### isOpen (optional)
+Change search component's open/close state dynamically by passing a new value to this prop. Alternatively, enforce a search that is always open by statically giving this prop a value of `true`. Defaults to `false`.
 
 ### placeholder (optional)
 The label to place inside the search field if/when empty. Defaults to a translated version of "Search…".

@@ -40,6 +40,7 @@ const actions = require( 'lib/posts/actions' ),
 	RestorePostDialog = require( 'post-editor/restore-post-dialog' ),
 	VerifyEmailDialog = require( 'post-editor/verify-email-dialog' ),
 	utils = require( 'lib/posts/utils' ),
+	userUtils = require( 'lib/user/utils' ),
 	i18n = require( 'lib/mixins/i18n' ),
 	EditorPreview = require( './editor-preview' ),
 	stats = require( 'lib/posts/stats' ),
@@ -782,19 +783,12 @@ const PostEditor = React.createClass( {
 		user.fetch();
 	},
 
-	needsVerification: function( user, site ) {
-		// do not allow publish for unverified e-mails,
-		// but allow if the site is VIP
-		return !user.email_verified && !( site && site.is_vip );
-	},
-
 	onPublish: function() {
 		var edits = { status: 'publish' };
 		var post = this.state.post;
-		var user = this.props.user.get();
 		var site = this.props.sites.getSite( post.site_ID );
 
-		if ( this.needsVerification( user, site ) ) {
+		if ( userUtils.needsVerificationForSite( site ) ) {
 			this.setState( {
 				showVerifyEmailDialog: true
 			} );

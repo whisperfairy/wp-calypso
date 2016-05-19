@@ -220,7 +220,7 @@ const MediaModalImageEditorCrop = React.createClass( {
 						top: this.props.bounds.topBound + 'px',
 						left: left + 'px',
 						width: width + 'px',
-						height: top - this.props.bounds.topBound + 'px'
+						height: Math.max( 0, top - this.props.bounds.topBound ) + 'px'
 					} }>
 				</div>
 				<div
@@ -228,8 +228,8 @@ const MediaModalImageEditorCrop = React.createClass( {
 					style={ {
 						top: this.props.bounds.topBound + 'px',
 						left: this.props.bounds.leftBound + 'px',
-						width: left - this.props.bounds.leftBound + 'px',
-						height: this.props.bounds.bottomBound - this.props.bounds.topBound + 'px'
+						width: Math.max( 0, left - this.props.bounds.leftBound ) + 'px',
+						height: Math.max( 0, this.props.bounds.bottomBound - this.props.bounds.topBound ) + 'px'
 					} }>
 				</div>
 				<div
@@ -238,7 +238,7 @@ const MediaModalImageEditorCrop = React.createClass( {
 						top: bottom + 'px',
 						left: left + 'px',
 						width: width + 'px',
-						height: this.props.bounds.bottomBound - bottom + 'px'
+						height: Math.max( 0, this.props.bounds.bottomBound - bottom ) + 'px'
 					} }>
 				</div>
 				<div
@@ -246,8 +246,8 @@ const MediaModalImageEditorCrop = React.createClass( {
 					style={ {
 						top: this.props.bounds.topBound + 'px',
 						left: right + 'px',
-						width: this.props.bounds.rightBound - right + 'px',
-						height: this.props.bounds.bottomBound - this.props.bounds.topBound + 'px'
+						width: Math.max( 0, this.props.bounds.rightBound - right ) + 'px',
+						height: Math.max( 0, this.props.bounds.bottomBound - this.props.bounds.topBound ) + 'px'
 					} }>
 				</div>
 				<Draggable

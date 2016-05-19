@@ -9,6 +9,7 @@ var React = require( 'react' ),
  */
 var DomainProductPrice = require( 'components/domains/domain-product-price' ),
 	abtest = require( 'lib/abtest' ).abtest,
+	{ isNextDomainFree } = require( 'lib/cart-values/cart-items' ),
 	Gridicon = require( 'components/gridicon' );
 
 var DomainSuggestion = React.createClass( {
@@ -49,9 +50,10 @@ var DomainSuggestion = React.createClass( {
 				<div className="domain-suggestion__content">
 					{ this.props.children }
 					<DomainProductPrice
+						isPlanRequired
+						freeWithPlan={ isNextDomainFree( this.props.cart ) }
 						isLoading={ this.props.isLoading }
-						price={ this.props.price }
-						cart={ this.props.cart }/>
+						price={ this.props.price }/>
 				</div>
 				<div className="domain-suggestion__action">
 					{ this.renderButton() }

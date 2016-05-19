@@ -1,29 +1,29 @@
 /**
  * External dependencies
  */
-var React = require( 'react' ),
-	classNames = require( 'classnames' );
+import React from 'react';
+import classNames from 'classnames';
 
 /**
  * Internal dependencies
  */
-var PremiumPopover = require( 'components/plans/premium-popover' ),
-	cartItems = require( 'lib/cart-values/cart-items' ),
-	sitesList = require( 'lib/sites-list' )(),
-	isPlan = require( 'lib/products-values' ).isPlan,
-	abtest = require( 'lib/abtest' ).abtest;
+import PremiumPopover from 'components/plans/premium-popover';
 
-const domainsWithPlansOnlyTestEnabled = abtest( 'domainsWithPlansOnly' ) === 'plansOnly';
-
-var DomainProductPrice = React.createClass( {
-	shouldShowPremiumMessage: function() {
-		const selectedSite = sitesList.getSelectedSite();
-		return domainsWithPlansOnlyTestEnabled && ! ( selectedSite && isPlan( selectedSite.plan ) ) && this.props.price;
-	}, subMessage() {
-		var freeWithPlan = this.props.cart && this.props.cart.hasLoadedFromServer && this.props.cart.next_domain_is_free && ! this.props.isFinalPrice;
-		if ( freeWithPlan ) {
-			return <span className="domain-product-price__free-text">{ this.translate( 'Free with your plan' ) }</span>;
-		} else if ( this.shouldShowPremiumMessage() ) {
+const DomainProductPrice = React.createClass( {
+	propTypes: {
+		isLoading: React.PropTypes.bool,
+		price: React.PropTypes.string,
+		freeWithPlan: React.PropTypes.bool,
+		requiresPlan: React.PropTypes.bool
+	},
+	subMessage() {
+		if ( this.props.freeWithPlan ) {
+			return (
+				<span className="domain-product-price__free-text" ref="subMessage">
+					{ this.translate( 'Free with your plan' ) }
+				</span>
+			);
+		} else if ( this.props.requiresPlan ) {
 			return (
 				<small className="domain-product-price__premium-text" ref="subMessage">
 					{ this.translate( 'Included in WordPress.com Premium' ) }
@@ -36,27 +36,23 @@ var DomainProductPrice = React.createClass( {
 		}
 		return null;
 	},
-	priceMessage( price ) {
+	priceText() {
+		if ( ! this.props.price ) {
+			return this.translate( 'Free' );
+		} else if ( this.props.requiresPlan && ! this.props.freeWithPlan ) {
+			return null;
+		}
 		return this.translate( '%(cost)s {{small}}/year{{/small}}', {
-			args: { cost: price },
+			args: { cost: this.props.price },
 			components: { small: <small /> }
 		} );
 	},
-	priceText() {
-		const selectedSite = sitesList.getSelectedSite();
-		if ( ! this.props.price ) {
-			return this.translate( 'Free' );
-		} else if ( domainsWithPlansOnlyTestEnabled && ! cartItems.isNextDomainFree( this.props.cart ) && ( ! selectedSite || ! isPlan( selectedSite.plan ) ) ) {
-			return null;
-		}
-		return this.priceMessage( this.props.price );
-	},
-	render: function() {
+	render() {
 		const classes = classNames( 'domain-product-price', {
-				'is-free-domain': cartItems.isNextDomainFree( this.props.cart ),
-				'is-with-plans-only': this.shouldShowPremiumMessage(),
-				'is-placeholder': this.props.isLoading
-			} );
+			'is-free-domain': this.props.freeWithPlan,
+			'is-with-plans-only': this.props.requiresPlan,
+			'is-placeholder': this.props.isLoading
+		} );
 
 		if ( this.props.isLoading ) {
 			return <div className={ classes }>{ this.translate( 'Loading…' ) }</div>;
@@ -71,4 +67,4 @@ var DomainProductPrice = React.createClass( {
 	}
 } );
 
-module.exports = DomainProductPrice;
+export default DomainProductPrice;

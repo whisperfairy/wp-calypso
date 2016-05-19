@@ -68,8 +68,9 @@ var MapDomainStep = React.createClass( {
 					</div>
 
 					<DomainProductPrice
-						price={ price }
-						cart={ this.props.cart } />
+						isPlanRequired
+						freeWithPlan={ cartItems.isNextDomainFree( this.props.cart ) }
+						price={ price } />
 
 					<fieldset>
 						<input

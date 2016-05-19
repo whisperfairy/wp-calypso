@@ -25,6 +25,10 @@ const MOCK_SITE = {
 	options: {}
 };
 
+const MOCK_USER = {
+	email_verified: true
+};
+
 describe( 'EditorGroundControl', function() {
 	let shallow, i18n, EditorGroundControl;
 
@@ -43,6 +47,9 @@ describe( 'EditorGroundControl', function() {
 		mockery.registerMock( 'post-editor/editor-status-label', EmptyComponent );
 		mockery.registerMock( 'components/sticky-panel', EmptyComponent );
 		mockery.registerMock( 'components/post-schedule', EmptyComponent );
+		mockery.registerMock( 'lib/user/utils', {
+			needsVerificationForSite: () => !MOCK_USER.email_verified,
+		} );
 		EditorGroundControl = require( '../' ).WrappedComponent;
 
 		EditorGroundControl.prototype.translate = i18n.translate;
@@ -302,6 +309,14 @@ describe( 'EditorGroundControl', function() {
 			var tree = shallow( <EditorGroundControl isPublishing={ false } post={ {} } hasContent isDirty isNew /> ).instance();
 
 			expect( tree.isPrimaryButtonEnabled() ).to.be.true;
+		} );
+
+		it( 'should return false if form is not publishing and post is not empty, but user is not verified', function() {
+			MOCK_USER.email_verified = false;
+			let tree = shallow( <EditorGroundControl isPublishing={ false } post={ {} } hasContent isDirty isNew /> ).instance();
+
+			expect( tree.isPrimaryButtonEnabled() ).to.be.false;
+			MOCK_USER.email_verified = true;
 		} );
 
 		it( 'should return true if form is not publishind and post is new and has content, but is not dirty', function() {

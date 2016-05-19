@@ -7,6 +7,7 @@ import React from 'react';
  * Internal dependencies
  */
 import CompactCard from 'components/card/compact';
+import PendingGappsTosNotice from 'my-sites/upgrades/components/domain-warnings/pending-gapps-tos-notice';
 import paths from 'my-sites/upgrades/paths';
 import analyticsMixin from 'lib/mixins/analytics';
 import SectionHeader from 'components/section-header';
@@ -27,11 +28,14 @@ const GoogleAppsUsers = React.createClass( {
 		user: React.PropTypes.object.isRequired
 	},
 
-	canAddUsers() {
-		const domainsInContext = this.props.selectedDomainName
+	getDomains() {
+		return this.props.selectedDomainName
 			? [ getSelectedDomain( this.props ) ]
 			: this.props.domains.list;
-		return domainsInContext.some( domain =>
+	},
+
+	canAddUsers() {
+		return this.getDomains().some( domain =>
 			domain.googleAppsSubscription.ownedByUserId === this.props.user.ID
 		);
 	},
@@ -49,6 +53,8 @@ const GoogleAppsUsers = React.createClass( {
 	render() {
 		return (
 			<div>
+				<PendingGappsTosNotice key="pending-gapps-tos-notice" domains={ this.getDomains() } />
+
 				<SectionHeader
 					count={ this.props.googleAppsUsers.length }
 					label={ this.translate( 'Google Apps Users' ) }>
@@ -63,6 +69,7 @@ const GoogleAppsUsers = React.createClass( {
 						</a>
 					) }
 				</SectionHeader>
+
 				<CompactCard className="google-apps-users-card">
 					<ul className="google-apps-users-card__user-list">
 						{ this.props.googleAppsUsers.map(

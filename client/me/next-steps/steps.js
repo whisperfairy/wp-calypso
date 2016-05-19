@@ -6,7 +6,7 @@ var React = require( 'react' );
 /**
  * Internal dependencies
  */
-var i18n = require( 'lib/mixins/i18n' ),
+var i18n = require( 'i18n-calypso' ),
 	paths = require( 'lib/paths' ),
 	config = require( 'config' );
 

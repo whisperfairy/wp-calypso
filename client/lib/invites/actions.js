@@ -14,7 +14,7 @@ import { action as ActionTypes } from 'lib/invites/constants';
 import analytics from 'lib/analytics';
 import { errorNotice, successNotice } from 'state/notices/actions';
 import { acceptedNotice } from 'my-sites/invites/utils';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 
 /**
  * Module variables

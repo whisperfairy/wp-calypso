@@ -11,7 +11,7 @@ var debug = require( 'debug' )( 'calypso:site' ),
  */
 var wpcom = require( 'lib/wp' ),
 	notices = require( 'notices' ),
-	i18n = require( 'lib/mixins/i18n' ),
+	i18n = require( 'i18n-calypso' ),
 	Emitter = require( 'lib/mixins/emitter' );
 
 function Site( attributes ) {

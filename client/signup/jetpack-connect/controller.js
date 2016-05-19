@@ -24,7 +24,7 @@ import jetpackSSOForm from './sso';
 import i18nUtils from 'lib/i18n-utils';
 import analytics from 'lib/analytics';
 import config from 'config';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import plansFactory from 'lib/plans-list';
 import route from 'lib/route';
 import sitesFactory from 'lib/sites-list';

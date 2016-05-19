@@ -6,7 +6,7 @@ import React from 'react';
 /**
  * Internal Dependencies
  */
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import { getName, isRefundable, isSubscription, isOneTimePurchase } from 'lib/purchases';
 import { isDomainRegistration } from 'lib/products-values';
 

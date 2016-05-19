@@ -15,7 +15,7 @@ import { getSelectedSiteId } from 'state/ui/selectors';
 import { getEditedPost } from 'state/posts/selectors';
 import { getEditorPostId, isEditorDraftsVisible } from 'state/ui/editor/selectors';
 import { toggleEditorDraftsVisible } from 'state/ui/editor/actions';
-import localize from 'lib/mixins/i18n/localize';
+import { localize } from 'i18n-calypso';
 import Button from 'components/button';
 import Gridicon from 'components/gridicon';
 import DraftsButton from 'post-editor/drafts-button';

@@ -10,7 +10,7 @@ import touchDetect from 'lib/touch-detect';
  * Internal dependencies
  */
 import observe from 'lib/mixins/data-observe';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import Month from './month';
 import Card from 'components/card';
 import SectionHeader from 'components/section-header';

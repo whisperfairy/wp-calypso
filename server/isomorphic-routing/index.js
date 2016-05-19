@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import i18n from 'i18n-calypso';
 import { serverRender } from 'render';
 import { createReduxStore } from 'state';
 import { setSection as setSectionMiddlewareFactory } from '../../client/controller';

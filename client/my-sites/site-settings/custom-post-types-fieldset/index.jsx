@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
  */
 import { getSelectedSiteId, getSelectedSite } from 'state/ui/selectors';
 import { isRequestingPostTypes, getPostTypes } from 'state/post-types/selectors';
-import localize from 'lib/mixins/i18n/localize';
+import { localize } from 'i18n-calypso';
 import QueryPostTypes from 'components/data/query-post-types';
 import FormFieldset from 'components/forms/form-fieldset';
 import FormLabel from 'components/forms/form-label';

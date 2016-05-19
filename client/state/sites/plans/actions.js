@@ -11,7 +11,7 @@ const debug = debugFactory( 'calypso:site-plans:actions' );
  * Internal dependencies
  */
 import { createSitePlanObject } from './assembler';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import {
 	SITE_PLANS_FETCH,
 	SITE_PLANS_FETCH_COMPLETED,

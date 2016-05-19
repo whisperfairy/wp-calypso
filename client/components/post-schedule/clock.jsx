@@ -8,7 +8,7 @@ import React, { Component, PropTypes } from 'react';
  */
 import InfoPopover from 'components/info-popover';
 import viewport from 'lib/viewport';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 
 /**
  * Local dependencies

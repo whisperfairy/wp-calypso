@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 /**
  * Internal dependencies
  */
-import localize from 'lib/mixins/i18n/localize';
+import { localize } from 'i18n-calypso';
 import { getEditedPost } from 'state/posts/selectors';
 import { getSelectedSite } from 'state/ui/selectors';
 import { getEditorPostId, isEditorNewPost } from 'state/ui/editor/selectors';

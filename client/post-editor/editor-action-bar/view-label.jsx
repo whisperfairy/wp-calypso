@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 /**
  * Internal dependencies
  */
-import localize from 'lib/mixins/i18n/localize';
+import { localize } from 'i18n-calypso';
 import { decodeEntities } from 'lib/formatting';
 import { getEditedPost } from 'state/posts/selectors';
 import { getSelectedSiteId } from 'state/ui/selectors';

@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
  */
 import EmptyContent from 'components/empty-content';
 import ExporterContainer from 'my-sites/exporter';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 
 export default class SiteSettingsExport extends Component {
 	render() {

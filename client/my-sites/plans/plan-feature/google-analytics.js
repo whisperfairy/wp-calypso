@@ -14,7 +14,7 @@ import page from 'page';
 import FeatureComparison from 'my-sites/feature-comparison';
 import PlanCompareCard from 'my-sites/plan-compare-card';
 import PlanCompareCardItem from 'my-sites/plan-compare-card/item';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import sitesList from 'lib/sites-list';
 
 import {

@@ -11,7 +11,7 @@ import classNames from 'classnames';
  */
 import ObserveWindowSizeMixin from 'lib/mixins/observe-window-resize';
 import Gridicon from 'components/gridicon';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import viewport from 'lib/viewport';
 
 /**

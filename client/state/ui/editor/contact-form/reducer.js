@@ -7,7 +7,7 @@ import merge from 'lodash/merge';
 /**
  * Internal dependencies
  */
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import {
 	EDITOR_CONTACT_FORM_CLEAR,
 	EDITOR_CONTACT_FORM_LOAD,

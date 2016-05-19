@@ -18,7 +18,7 @@ var StepWrapper = require( 'signup/step-wrapper' ),
 	Notice = require( 'components/notice' ),
 	abtest = require( 'lib/abtest' ).abtest,
 	signupUtils = require( 'signup/utils' ),
-	i18n = require( 'lib/mixins/i18n' );
+	i18n = require( 'i18n-calypso' );
 
 const domainsWithPlansOnlyTestEnabled = abtest( 'domainsWithPlansOnly' ) === 'plansOnly';
 

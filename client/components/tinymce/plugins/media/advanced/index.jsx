@@ -9,7 +9,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 /**
  * Internal dependencies
  */
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import * as MediaSerialization from 'lib/media-serialization';
 import config from 'config';
 import { setEditorMediaEditItem } from 'state/ui/editor/media/actions';

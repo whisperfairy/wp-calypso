@@ -7,7 +7,7 @@ import React, { PropTypes } from 'react';
  * Internal dependencies
  */
 import Dialog from 'components/dialog';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import purchasesPaths from 'me/purchases/paths';
 
 const DeleteSiteWarningDialog = ( { isVisible, onClose } ) => (

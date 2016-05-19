@@ -22,7 +22,7 @@ import {
 
 import NavigationComponent from 'my-sites/navigation';
 import route from 'lib/route';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import notices from 'notices';
 import config from 'config';
 import analytics from 'lib/analytics';

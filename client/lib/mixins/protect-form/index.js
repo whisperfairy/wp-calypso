@@ -7,7 +7,7 @@ var debug = require( 'debug' )( 'calypso:protect-form' ),
 /**
  * Internal dependencies
  */
-var i18n = require( 'lib/mixins/i18n' );
+var i18n = require( 'i18n-calypso' );
 
 var confirmText = i18n.translate( 'You have unsaved changes. Are you sure you want to leave this page?' ),
 	beforeUnloadText = i18n.translate( 'You have unsaved changes.' ),

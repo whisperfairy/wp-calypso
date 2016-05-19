@@ -10,7 +10,7 @@ var React = require( 'react' ),
  * Internal dependencies
  */
 var Card = require( 'components/card' ),
-	i18n = require( 'lib/mixins/i18n' ),
+	i18n = require( 'i18n-calypso' ),
 	SectionHeader = require( 'components/section-header' );
 
 module.exports = React.createClass( {

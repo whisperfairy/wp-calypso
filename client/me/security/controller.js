@@ -8,7 +8,7 @@ import page from 'page';
  * Internal dependencies
  */
 import analytics from 'lib/analytics';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import notices from 'notices';
 import userSettings from 'lib/user-settings';
 import titleActions from 'lib/screen-title/actions';

@@ -11,7 +11,7 @@ import debugFactory from 'debug';
  */
 import ThemeSheetComponent from './main';
 import ThemeDetailsComponent from 'components/data/theme-details';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import { getCurrentUser } from 'state/current-user/selectors';
 import { getThemeDetails } from 'state/themes/theme-details/selectors';
 import ClientSideEffects from 'components/client-side-effects';

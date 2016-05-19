@@ -11,7 +11,7 @@ import isEmpty from 'lodash/isEmpty';
 /**
  * Internal Dependencies
  */
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import config from 'config';
 import route from 'lib/route';
 import analytics from 'lib/analytics';

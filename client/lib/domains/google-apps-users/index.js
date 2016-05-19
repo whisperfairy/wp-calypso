@@ -13,7 +13,7 @@ var some = require( 'lodash/some' ),
 /**
  * Internal dependencies
  */
-var i18n = require( 'lib/mixins/i18n' );
+var i18n = require( 'i18n-calypso' );
 
 function filter( { users, fields } ) {
 	return users.filter( function( user, index ) {

@@ -11,7 +11,7 @@ import debugModule from 'debug';
 /**
  * Internal Dependencies
  */
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import titleActions from 'lib/screen-title/actions';
 import InviteAccept from 'my-sites/invites/invite-accept';
 import { setSection } from 'state/ui/actions';

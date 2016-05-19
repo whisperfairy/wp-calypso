@@ -19,7 +19,7 @@ import ImportSettings from './section-import';
 import ExportSettings from './section-export';
 import SiteSecurity from './section-security';
 import SidebarNavigation from 'my-sites/sidebar-navigation';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 
 /**
  * Module vars

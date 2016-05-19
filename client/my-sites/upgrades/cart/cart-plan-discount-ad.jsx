@@ -13,7 +13,7 @@ import { cartItems } from 'lib/cart-values';
 import { fetchSitePlans } from 'state/sites/plans/actions';
 import { getPlansBySite } from 'state/sites/plans/selectors';
 import { isBusiness, isPremium } from 'lib/products-values';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import { shouldFetchSitePlans } from 'lib/plans';
 
 const CartPlanDiscountAd = React.createClass( {

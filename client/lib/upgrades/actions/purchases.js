@@ -8,7 +8,7 @@ import debugFactory from 'debug';
  */
 import { action as ActionTypes } from '../constants';
 import Dispatcher from 'dispatcher';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import olark from 'lib/olark';
 import purchasesAssembler from 'lib/purchases/assembler';
 import wp from 'lib/wp';

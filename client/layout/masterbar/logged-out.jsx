@@ -11,7 +11,7 @@ import Masterbar from './masterbar';
  */
 import Item from './item';
 import config from 'config';
-import localize from 'lib/mixins/i18n/localize';
+import { localize } from 'i18n-calypso';
 
 const MasterbarLoggedOut = ( { title, translate } ) => (
 	<Masterbar>

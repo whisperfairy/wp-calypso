@@ -10,7 +10,7 @@ import { Provider as ReduxProvider } from 'react-redux';
  * Internal Dependencies
  */
 import abtest from 'lib/abtest';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import route from 'lib/route';
 import pageNotifier from 'lib/route/page-notifier';
 import feedStreamFactory from 'lib/feed-stream-store';

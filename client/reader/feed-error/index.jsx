@@ -9,7 +9,7 @@ import React from 'react';
 import Main from 'components/main';
 import MobileBackToSidebar from 'components/mobile-back-to-sidebar';
 import EmptyContent from 'components/empty-content';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import { recordAction, recordGaEvent, recordTrack } from 'reader/stats';
 
 const FeedError = React.createClass( {

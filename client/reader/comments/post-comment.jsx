@@ -10,7 +10,7 @@ import {
 import Gridicon from 'components/gridicon';
 import PostTime from 'reader/post-time';
 import Gravatar from 'components/gravatar';
-import { translate } from 'lib/mixins/i18n';
+import { translate } from 'i18n-calypso';
 import {
 	recordAction,
 	recordGaEvent,

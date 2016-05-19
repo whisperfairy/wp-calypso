@@ -15,7 +15,7 @@ var updatePostStatus = require( 'lib/mixins/update-post-status' ),
 	PopoverMenuItem = require( 'components/popover/menu-item' ),
 	SiteIcon = require( 'components/site-icon' ),
 	helpers = require( './helpers' ),
-	i18n = require( 'lib/mixins/i18n' ),
+	i18n = require( 'i18n-calypso' ),
 	analytics = require( 'lib/analytics' ),
 	utils = require( 'lib/posts/utils' );
 

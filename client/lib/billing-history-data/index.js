@@ -10,7 +10,7 @@ var debug = require( 'debug' )( 'calypso:my-sites:billing-history:billing-data' 
  * Internal dependencies
  */
 var wpcom = require( 'lib/wp' ).undocumented(),
-	i18n = require( 'lib/mixins/i18n' );
+	i18n = require( 'i18n-calypso' );
 
 function BillingData() {
 	if ( ! ( this instanceof BillingData ) ) {

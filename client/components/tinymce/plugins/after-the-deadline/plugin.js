@@ -26,7 +26,7 @@ import throttle from 'lodash/throttle';
 /**
  * Internal dependencies
  */
-import { getLocaleSlug, translate } from 'lib/mixins/i18n';
+import { getLocaleSlug, translate } from 'i18n-calypso';
 import AtDCore from './core';
 import PreferencesActions from 'lib/preferences/actions';
 import PreferencesStore from 'lib/preferences/store';

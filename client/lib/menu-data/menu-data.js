@@ -18,7 +18,7 @@ import isArray from 'lodash/isArray';
  */
 import wpcom from 'lib/wp';
 import Emitter from 'lib/mixins/emitter';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import sitesFactory from 'lib/sites-list';
 import untrailingslashit from 'lib/route/untrailingslashit';
 import trailingslashit from 'lib/route/trailingslashit';

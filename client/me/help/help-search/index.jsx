@@ -15,7 +15,7 @@ import NoResults from 'my-sites/no-results';
 import SearchCard from 'components/search-card';
 import CompactCard from 'components/card/compact';
 import analytics from 'lib/analytics';
-import { getLocaleSlug } from 'lib/mixins/i18n';
+import { getLocaleSlug } from 'i18n-calypso';
 
 module.exports = React.createClass( {
 	displayName: 'HelpSearch',

@@ -12,7 +12,7 @@ var config = require( 'config' ),
 	PollerPool = require( 'lib/data-poller' )
 
 import { connectionLost, connectionRestored } from 'state/application/actions';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 
 var STATUS_CHECK_INTERVAL = 20000,
 	connected = true,

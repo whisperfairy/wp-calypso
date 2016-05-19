@@ -13,7 +13,7 @@ import QueryPostCounts from 'components/data/query-post-counts';
 import { getSelectedSiteId } from 'state/ui/selectors';
 import { isJetpackSite } from 'state/sites/selectors';
 import { getAllPostCount } from 'state/posts/counts/selectors';
-import { translate } from 'lib/mixins/i18n';
+import { translate } from 'i18n-calypso';
 
 function EditorDraftsButton( { count, onClick, jetpack, siteId, hideText } ) {
 	return (

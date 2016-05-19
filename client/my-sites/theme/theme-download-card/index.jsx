@@ -11,7 +11,7 @@ import React from 'react';
 import Button from 'components/button';
 import Card from 'components/card';
 import Gridicon from 'components/gridicon';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 
 var ThemeDownloadCard = React.createClass( {
 

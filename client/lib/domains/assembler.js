@@ -10,7 +10,7 @@ import camelCase from 'lodash/camelCase';
  * Internal dependencies
  */
 import {type as domainTypes} from './constants';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 
 function createDomainObjects( dataTransferObject ) {
 	let domains = [];

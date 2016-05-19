@@ -10,7 +10,7 @@ import ReactDom from 'react-dom';
  */
 import analytics from 'lib/analytics';
 import config from 'config';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import { renderWithReduxStore } from 'lib/react-helpers';
 import route from 'lib/route';
 import sitesFactory from 'lib/sites-list';

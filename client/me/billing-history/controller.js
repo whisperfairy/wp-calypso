@@ -7,7 +7,7 @@ import React from 'react';
  * Internal dependencies
  */
 import analytics from 'lib/analytics';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import route from 'lib/route';
 import titleActions from 'lib/screen-title/actions';
 import { renderWithReduxStore } from 'lib/react-helpers';

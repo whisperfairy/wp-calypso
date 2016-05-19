@@ -14,7 +14,7 @@ import identity from 'lodash/identity';
  * Internal dependencies
  */
 import RootChild from 'components/root-child';
-import localize from 'lib/mixins/i18n/localize';
+import { localize } from 'i18n-calypso';
 
 export class DropZone extends Component {
 	constructor( props ) {

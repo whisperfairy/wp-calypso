@@ -6,7 +6,7 @@ var qs = require( 'querystring' );
 /**
  * Internal dependencies
  */
-var i18n = require( 'lib/mixins/i18n' );
+var i18n = require( 'i18n-calypso' );
 
 var baseUrl = '//widgets.wp.com/sharing-buttons-preview/';
 

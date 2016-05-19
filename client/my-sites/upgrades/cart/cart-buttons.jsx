@@ -10,7 +10,7 @@ import page from 'page';
  * Internal dependencies
  */
 import AnalyticsMixin from 'lib/mixins/analytics';
-import localize from 'lib/mixins/i18n/localize';
+import { localize } from 'i18n-calypso';
 
 export const CartButtons = React.createClass( {
 	mixins: [ AnalyticsMixin( 'popupCart' ) ],

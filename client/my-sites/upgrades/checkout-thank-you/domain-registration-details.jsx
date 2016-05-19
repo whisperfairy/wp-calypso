@@ -9,7 +9,7 @@ import React from 'react';
 import { getDomainManagementUrl } from './utils';
 import GoogleAppsDetails from './google-apps-details';
 import { isGoogleApps } from 'lib/products-values';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import PurchaseDetail from 'components/purchase-detail';
 import supportUrls from 'lib/url/support';
 

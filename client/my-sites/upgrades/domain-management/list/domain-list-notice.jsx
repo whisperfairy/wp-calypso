@@ -9,7 +9,7 @@ import React from 'react';
  **/
 import Notice from 'components/notice';
 import NoticeAction from 'components/notice/notice-action';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import {
 	PRIMARY_DOMAIN_CHANGE_SUCCESS,
 	PRIMARY_DOMAIN_CHANGE_FAIL,

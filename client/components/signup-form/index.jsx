@@ -26,7 +26,7 @@ import notices from 'notices';
 import Notice from 'components/notice';
 import LoggedOutForm from 'components/logged-out-form';
 import formState from 'lib/form-state';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import LoggedOutFormLinks from 'components/logged-out-form/links';
 import LoggedOutFormLinkItem from 'components/logged-out-form/link-item';
 import LoggedOutFormFooter from 'components/logged-out-form/footer';

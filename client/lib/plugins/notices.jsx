@@ -11,7 +11,7 @@ var notices = require( 'notices' ),
 	PluginsActions = require( 'lib/plugins/actions' ),
 	PluginsUtil = require( 'lib/plugins/utils' ),
 	versionCompare = require( 'lib/version-compare' ),
-	i18n = require( 'lib/mixins/i18n' );
+	i18n = require( 'i18n-calypso' );
 
 function getCombination( translateArg ) {
 	return ( translateArg.numberOfSites > 1 ? 'n sites' : '1 site' ) + ' ' + ( translateArg.numberOfPlugins > 1 ? 'n plugins' : '1 plugin' );

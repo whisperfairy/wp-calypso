@@ -18,7 +18,7 @@ import { getEditorPath } from 'state/ui/editor/selectors';
 import { getSectionName } from 'state/ui/selectors';
 import { decodeEntities } from 'lib/formatting';
 import analytics from 'lib/analytics';
-import localize from 'lib/mixins/i18n/localize';
+import { localize } from 'i18n-calypso';
 import QueryPosts from 'components/data/query-posts';
 import SiteIcon from 'components/site-icon';
 import sitesList from 'lib/sites-list';

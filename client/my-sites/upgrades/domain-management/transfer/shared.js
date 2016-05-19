@@ -7,7 +7,7 @@ import React from 'react';
  * Internal dependencies
  */
 import notices from 'notices';
-import { translate } from 'lib/mixins/i18n';
+import { translate } from 'i18n-calypso';
 import support from 'lib/url/support';
 
 export const displayResponseError = ( responseError ) => {

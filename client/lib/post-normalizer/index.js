@@ -29,7 +29,7 @@ import striptags from 'striptags';
 /**
  * Internal dependencies
  */
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import formatting from 'lib/formatting';
 import safeImageURL from 'lib/safe-image-url';
 

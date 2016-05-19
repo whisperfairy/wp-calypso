@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 // Internal dependencies
-import { translate } from 'lib/mixins/i18n';
+import { translate } from 'i18n-calypso';
 import LikeButton from 'components/like-button/button';
 import {
 	recordAction,

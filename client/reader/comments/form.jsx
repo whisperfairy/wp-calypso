@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import noop from 'lodash/noop';
 
 // Internal dependencies
-import { translate } from 'lib/mixins/i18n';
+import { translate } from 'i18n-calypso';
 import Gravatar from 'components/gravatar';
 import Notice from 'components/notice';
 import {

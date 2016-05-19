@@ -19,7 +19,7 @@ import notices from 'notices';
 import olarkEvents from 'lib/olark-events';
 import olarkStore from 'lib/olark-store';
 import olarkActions from 'lib/olark-store/actions';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 
 /**
  * Module variables

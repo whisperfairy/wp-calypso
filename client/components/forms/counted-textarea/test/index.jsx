@@ -9,13 +9,12 @@ var React = require( 'react' ),
 /**
  * Internal dependencies
  */
-var i18n = require( 'lib/mixins/i18n' );
+var i18n = require( 'i18n-calypso' );
 
 describe( 'index', function() {
 	var CountedTextarea, renderer;
 
 	before( function() {
-		i18n.initialize();
 		ReactInjection.Class.injectMixin( i18n.mixin );
 		CountedTextarea = require( '../' );
 	} );

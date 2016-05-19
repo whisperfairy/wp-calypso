@@ -9,7 +9,7 @@ import find from 'lodash/find';
  */
 import analytics from 'lib/analytics';
 import signupUtils from 'signup/utils';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 
 export default React.createClass( {
 	displayName: 'PreviousStepButton',

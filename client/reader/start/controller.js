@@ -8,7 +8,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 /**
  * Internal dependencies
  */
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import { trackPageLoad, setPageTitle } from 'reader/controller-helper';
 
 const analyticsPageTitle = 'Reader';

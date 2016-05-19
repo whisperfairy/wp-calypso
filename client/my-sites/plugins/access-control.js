@@ -2,7 +2,7 @@
  * Internal Dependencies
  */
 import sitesList from 'lib/sites-list'
-import i18n from 'lib/mixins/i18n'
+import i18n from 'i18n-calypso'
 import config from 'config'
 import notices from 'notices'
 

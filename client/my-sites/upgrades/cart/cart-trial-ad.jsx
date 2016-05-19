@@ -9,7 +9,7 @@ import React from 'react';
 import CartAd from './cart-ad';
 import { cartItems } from 'lib/cart-values';
 import { addCurrentPlanToCartAndRedirect, getCurrentPlan, getDayOfTrial } from 'lib/plans';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 
 const CartTrialAd = React.createClass( {
 	propTypes: {

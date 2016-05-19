@@ -9,7 +9,7 @@ var ReactDom = require( 'react-dom' ),
  * Internal Dependencies
  */
 var route = require( 'lib/route' ),
-	i18n = require( 'lib/mixins/i18n' ),
+	i18n = require( 'i18n-calypso' ),
 	titleActions = require( 'lib/screen-title/actions' ),
 	sites = require( 'lib/sites-list' )();
 

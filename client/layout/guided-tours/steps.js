@@ -6,7 +6,7 @@ import React, { Component, PropTypes } from 'react';
 /**
  * Internal dependencies
  */
-import localize from 'lib/mixins/i18n/localize';
+import { localize } from 'i18n-calypso';
 import Card from 'components/card';
 import Button from 'components/button';
 import ExternalLink from 'components/external-link';

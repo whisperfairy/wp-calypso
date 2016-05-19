@@ -3,7 +3,7 @@
  */
 var sites = require( 'lib/sites-list' )(),
 	decodeEntities = require( 'lib/formatting' ).decodeEntities,
-	i18n = require( 'lib/mixins/i18n' );
+	i18n = require( 'i18n-calypso' );
 
 module.exports = {
 

@@ -30,7 +30,7 @@ describe( 'PostEditor', function() {
 
 		mockery.registerSubstitute( 'matches-selector', 'component-matches-selector' );
 		mockery.registerSubstitute( 'query', 'component-query' );
-		mockery.registerMock( 'lib/mixins/i18n', {
+		mockery.registerMock( 'i18n-calypso', {
 			translate: ( string ) => string
 		} );
 		mockery.registerMock( 'components/tinymce', MOCK_COMPONENT );

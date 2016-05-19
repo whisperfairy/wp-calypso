@@ -12,7 +12,7 @@ import capitalize from 'lodash/capitalize';
  * Internal Dependencies
  */
 import route from 'lib/route';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import notices from 'notices';
 import sitesFactory from 'lib/sites-list';
 import analytics from 'lib/analytics';

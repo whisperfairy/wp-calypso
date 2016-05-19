@@ -7,7 +7,7 @@ import React from 'react';
  * Internal dependencies
  */
 import { addCurrentPlanToCartAndRedirect, getCurrentPlan, getDayOfTrial } from 'lib/plans';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import Notice from 'components/notice';
 
 const FreeTrialNotice = React.createClass( {

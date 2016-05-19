@@ -8,7 +8,7 @@ import React from 'react';
  * Internal dependencies
  */
 import CustomDomainPurchaseDetail from './custom-domain-purchase-detail';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import { isBusiness } from 'lib/products-values';
 import PurchaseDetail from 'components/purchase-detail';
 

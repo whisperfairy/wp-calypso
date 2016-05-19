@@ -9,7 +9,7 @@ import classNames from 'classnames';
 /**
  * Internal dependencies
  */
-import { translate } from 'lib/mixins/i18n';
+import { translate } from 'i18n-calypso';
 import {
 	getPostCommentsTree,
 	getPostTotalCommentsCount,

@@ -4,7 +4,7 @@ import React from 'react';
 /**
  * Internal dependencies
  */
-import { translate } from 'lib/mixins/i18n';
+import { translate } from 'i18n-calypso';
 import Card from 'components/card';
 import SectionHeader from 'components/section-header';
 import support from 'lib/url/support';

@@ -12,7 +12,7 @@ import Theme from 'components/theme';
 import EmptyContent from 'components/empty-content';
 import InfiniteScroll from 'lib/mixins/infinite-scroll';
 import { PER_PAGE } from 'state/themes/themes-list/constants';
-import localize from 'lib/mixins/i18n/localize';
+import { localize } from 'i18n-calypso';
 
 /**
  * Component

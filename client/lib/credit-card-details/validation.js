@@ -12,7 +12,7 @@ var creditcards = require( 'creditcards' ),
 /**
  * Internal dependencies
  */
-var i18n = require( 'lib/mixins/i18n' );
+var i18n = require( 'i18n-calypso' );
 
 function creditCardFieldRules() {
 	return {

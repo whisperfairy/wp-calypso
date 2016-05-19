@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 import analytics from 'lib/analytics';
-import i18n from 'lib/mixins/i18n';
+import i18n from 'i18n-calypso';
 import { recordTrack } from 'reader/stats';
 import titleActions from 'lib/screen-title/actions';
 import FeedStreamStoreActions from 'lib/feed-stream-store/actions';

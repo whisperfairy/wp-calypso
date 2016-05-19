@@ -18,7 +18,7 @@ var ReactDom = require( 'react-dom' ),
  * Internal dependencies
  */
 var sites = require( 'lib/sites-list' )(),
-	i18n = require( 'lib/mixins/i18n' ),
+	i18n = require( 'i18n-calypso' ),
 	PostActions = require( 'lib/posts/actions' ),
 	PostEditStore = require( 'lib/posts/post-edit-store' ),
 	MediaConstants = require( 'lib/media/constants' ),

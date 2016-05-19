@@ -9,7 +9,7 @@ var ReactDom = require( 'react-dom' ),
  */
 var sites = require( 'lib/sites-list' )(),
 	route = require( 'lib/route' ),
-	i18n = require( 'lib/mixins/i18n' ),
+	i18n = require( 'i18n-calypso' ),
 	analytics = require( 'lib/analytics' ),
 	MainComponent = require( 'components/main' ),
 	JetpackManageErrorPage = require( 'my-sites/jetpack-manage-error-page' ),

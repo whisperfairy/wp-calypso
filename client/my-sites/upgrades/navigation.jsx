@@ -24,7 +24,7 @@ var config = require( 'config' ),
 	viewport = require( 'lib/viewport' ),
 	upgradesActionTypes = require( 'lib/upgrades/constants' ).action,
 	PopoverCart = require( 'my-sites/upgrades/cart/popover-cart' ),
-	i18n = require( 'lib/mixins/i18n' );
+	i18n = require( 'i18n-calypso' );
 
 // The first path acts as the primary path that the button will link to. The
 // remaining paths will make the button highlighted on that page.

@@ -95,7 +95,7 @@
       "version": "0.2.3"
     },
     "assert": {
-      "version": "1.3.0"
+      "version": "1.4.0"
     },
     "assert-plus": {
       "version": "0.2.0"
@@ -189,6 +189,12 @@
         },
         "lodash": {
           "version": "3.10.1"
+        },
+        "lodash.assign": {
+          "version": "3.2.0"
+        },
+        "lodash.keys": {
+          "version": "3.1.2"
         },
         "recast": {
           "version": "0.10.33"
@@ -298,6 +304,9 @@
     "benchmark": {
       "version": "1.0.0"
     },
+    "better-assert": {
+      "version": "1.0.2"
+    },
     "big.js": {
       "version": "3.1.3"
     },
@@ -372,6 +381,9 @@
     },
     "buffer": {
       "version": "3.6.0"
+    },
+    "buffer-shims": {
+      "version": "1.0.0"
     },
     "bufferutil": {
       "version": "1.2.1"
@@ -525,6 +537,9 @@
     "component-bind": {
       "version": "1.0.0"
     },
+    "component-classes": {
+      "version": "1.2.6"
+    },
     "component-closest": {
       "version": "0.1.4"
     },
@@ -647,7 +662,7 @@
       "version": "2.2.3"
     },
     "cross-spawn-async": {
-      "version": "2.2.2"
+      "version": "2.2.4"
     },
     "cryptiles": {
       "version": "2.0.5"
@@ -733,7 +748,7 @@
           "version": "6.0.4"
         },
         "globby": {
-          "version": "4.0.0"
+          "version": "4.1.0"
         },
         "object-assign": {
           "version": "4.1.0"
@@ -1170,7 +1185,15 @@
       }
     },
     "figures": {
-      "version": "1.6.0"
+      "version": "1.7.0",
+      "dependencies": {
+        "escape-string-regexp": {
+          "version": "1.0.5"
+        },
+        "object-assign": {
+          "version": "4.1.0"
+        }
+      }
     },
     "file-entry-cache": {
       "version": "1.2.4",
@@ -1841,7 +1864,7 @@
       "version": "1.0.0"
     },
     "hosted-git-info": {
-      "version": "2.1.4"
+      "version": "2.1.5"
     },
     "html-browserify": {
       "version": "0.0.4"
@@ -1894,6 +1917,20 @@
     "https-browserify": {
       "version": "0.0.0"
     },
+    "i18n-calypso": {
+      "version": "0.1.1",
+      "dependencies": {
+        "core-js": {
+          "version": "1.2.6"
+        },
+        "fbjs": {
+          "version": "0.6.1"
+        },
+        "react": {
+          "version": "0.14.8"
+        }
+      }
+    },
     "iconv-lite": {
       "version": "0.4.13"
     },
@@ -1918,7 +1955,7 @@
       "version": "0.0.1"
     },
     "inflight": {
-      "version": "1.0.4"
+      "version": "1.0.5"
     },
     "inherits": {
       "version": "2.0.1"
@@ -1940,6 +1977,9 @@
         }
       }
     },
+    "interpolate-components": {
+      "version": "1.0.4"
+    },
     "interpret": {
       "version": "0.6.6"
     },
@@ -1951,9 +1991,6 @@
     },
     "ipaddr.js": {
       "version": "1.0.5"
-    },
-    "is-absolute": {
-      "version": "0.1.7"
     },
     "is-arrayish": {
       "version": "0.2.1"
@@ -2040,9 +2077,6 @@
     },
     "is-regex": {
       "version": "1.0.3"
-    },
-    "is-relative": {
-      "version": "0.1.3"
     },
     "is-resolvable": {
       "version": "1.0.0"
@@ -2204,7 +2238,7 @@
       "version": "1.2.2"
     },
     "jstimezonedetect": {
-      "version": "1.0.5"
+      "version": "1.0.6"
     },
     "jstransform": {
       "version": "10.1.0",
@@ -2288,10 +2322,20 @@
       "version": "3.0.0"
     },
     "lodash._baseassign": {
-      "version": "3.2.0"
+      "version": "3.2.0",
+      "dependencies": {
+        "lodash.keys": {
+          "version": "3.1.2"
+        }
+      }
     },
     "lodash._baseclone": {
-      "version": "3.3.0"
+      "version": "3.3.0",
+      "dependencies": {
+        "lodash.keys": {
+          "version": "3.1.2"
+        }
+      }
     },
     "lodash._basecopy": {
       "version": "3.0.1"
@@ -2339,7 +2383,7 @@
       "version": "3.0.0"
     },
     "lodash.assign": {
-      "version": "3.2.0"
+      "version": "4.0.9"
     },
     "lodash.clonedeep": {
       "version": "3.0.2"
@@ -2357,13 +2401,18 @@
       "version": "3.0.6"
     },
     "lodash.keys": {
-      "version": "3.1.2"
+      "version": "4.0.7"
     },
     "lodash.keysin": {
       "version": "3.0.8"
     },
     "lodash.merge": {
-      "version": "3.3.2"
+      "version": "3.3.2",
+      "dependencies": {
+        "lodash.keys": {
+          "version": "3.1.2"
+        }
+      }
     },
     "lodash.omit": {
       "version": "3.1.0"
@@ -2379,6 +2428,9 @@
     },
     "lodash.pick": {
       "version": "3.1.0"
+    },
+    "lodash.rest": {
+      "version": "4.0.3"
     },
     "lodash.restparam": {
       "version": "3.6.1"
@@ -2408,7 +2460,7 @@
       "version": "1.0.2"
     },
     "lru-cache": {
-      "version": "4.0.0"
+      "version": "4.0.1"
     },
     "lunr": {
       "version": "0.5.7"
@@ -2521,7 +2573,7 @@
       "version": "2.10.6"
     },
     "moment-timezone": {
-      "version": "0.4.1"
+      "version": "0.4.0"
     },
     "morgan": {
       "version": "1.2.0",
@@ -2658,7 +2710,7 @@
       }
     },
     "npmlog": {
-      "version": "2.0.3"
+      "version": "2.0.4"
     },
     "nth-check": {
       "version": "1.0.1"
@@ -2840,9 +2892,9 @@
       "version": "0.1.4"
     },
     "phone": {
-      "version": "1.0.4-3",
-      "from": "git+https://github.com/Automattic/node-phone.git#b00e5a94302d0bc5ae122c0001310954d43488da",
-      "resolved": "git+https://github.com/Automattic/node-phone.git#b00e5a94302d0bc5ae122c0001310954d43488da"
+      "version": "1.0.4-11",
+      "from": "git+https://github.com/Automattic/node-phone.git#3161829eba3dbab67c69a3795f74765026d4337a",
+      "resolved": "git+https://github.com/Automattic/node-phone.git#3161829eba3dbab67c69a3795f74765026d4337a"
     },
     "photon": {
       "version": "2.0.0"
@@ -3037,7 +3089,7 @@
       "version": "1.0.1"
     },
     "readable-stream": {
-      "version": "2.1.2"
+      "version": "2.1.4"
     },
     "readdirp": {
       "version": "2.0.0"
@@ -3233,6 +3285,9 @@
         },
         "http-errors": {
           "version": "1.3.1"
+        },
+        "statuses": {
+          "version": "1.2.1"
         }
       }
     },
@@ -3267,6 +3322,9 @@
         },
         "send": {
           "version": "0.13.1"
+        },
+        "statuses": {
+          "version": "1.2.1"
         }
       }
     },
@@ -3274,7 +3332,12 @@
       "version": "2.2.6"
     },
     "shallowequal": {
-      "version": "0.2.2"
+      "version": "0.2.2",
+      "dependencies": {
+        "lodash.keys": {
+          "version": "3.1.2"
+        }
+      }
     },
     "shebang-regex": {
       "version": "1.0.0"
@@ -3425,7 +3488,7 @@
       "version": "0.1.5"
     },
     "statuses": {
-      "version": "1.2.1"
+      "version": "1.3.0"
     },
     "stdin": {
       "version": "0.0.1"
@@ -3669,7 +3732,7 @@
       "version": "0.1.1"
     },
     "type-is": {
-      "version": "1.6.12"
+      "version": "1.6.13"
     },
     "typedarray": {
       "version": "0.0.6"
@@ -3822,7 +3885,7 @@
       "version": "0.6.5"
     },
     "which": {
-      "version": "1.2.8"
+      "version": "1.2.9"
     },
     "window-size": {
       "version": "0.1.4"
@@ -3866,7 +3929,7 @@
       "version": "0.5.0"
     },
     "wrappy": {
-      "version": "1.0.1"
+      "version": "1.0.2"
     },
     "write": {
       "version": "0.2.1"

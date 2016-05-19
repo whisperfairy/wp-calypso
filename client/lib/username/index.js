@@ -3,7 +3,7 @@
  */
 var Emitter = require( 'lib/mixins/emitter' ),
 	wpcom = require( 'lib/wp' ),
-	i18n = require( 'lib/mixins/i18n' ),
+	i18n = require( 'i18n-calypso' ),
 	user = require( 'lib/user' )();
 
 /**

@@ -318,6 +318,17 @@ function planItem( productSlug, isFreeTrial = false ) {
 }
 
 /**
+ * Creates a new shopping cart item for a Personal plan.
+ *
+ * @param {string} slug - e.g. value_bundle, jetpack_premium
+ * @param {Object} properties - list of properties
+ * @returns {Object} the new item as `CartItemValue` object
+ */
+function personalPlan( slug, properties ) {
+	return planItem( slug, properties.isFreeTrial );
+}
+
+/**
  * Creates a new shopping cart item for a Premium plan.
  *
  * @param {string} slug - e.g. value_bundle, jetpack_premium
@@ -472,6 +483,8 @@ function getItemForPlan( plan, properties ) {
 	properties = properties || {};
 
 	switch ( plan.product_slug ) {
+		case 'personal-bundle':
+			return personalPlan( plan.product_slug, properties );
 		case 'value_bundle':
 		case 'jetpack_premium':
 			return premiumPlan( plan.product_slug, properties );

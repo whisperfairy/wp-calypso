@@ -178,6 +178,10 @@ const PlansCompare = React.createClass( {
 			planElements = [ <th className="plans-compare__header-cell" key="placeholder" /> ];
 
 			planElements = planElements.concat( plans.map( ( plan ) => {
+				if ( ! isEnabled( 'upgrades/personal-plan' ) && plan.product_slug === 'personal-bundle' ) {
+					return null;
+				}
+
 				const sitePlan = this.getSitePlan( plan ),
 					classes = classNames( 'plans-compare__header-cell', {
 						'is-selected': this.isSelected( plan )
@@ -240,6 +244,10 @@ const PlansCompare = React.createClass( {
 
 			rows = features.map( ( feature ) => {
 				const planFeatures = plans.map( ( plan ) => {
+					if ( ! isEnabled( 'upgrades/personal-plan' ) && plan.product_slug === 'personal-bundle' ) {
+						return null;
+					}
+
 					const classes = classNames( 'plans-compare__cell', 'is-plan-specific', {
 							'is-selected': this.isSelected( plan )
 						} ),
@@ -301,6 +309,10 @@ const PlansCompare = React.createClass( {
 		let cells = [ <td className="plans-compare__action-cell" key="placeholder" /> ];
 
 		cells = cells.concat( plans.map( ( plan ) => {
+			if ( ! isEnabled( 'upgrades/personal-plan' ) && plan.product_slug === 'personal-bundle' ) {
+				return null;
+			}
+
 			const sitePlan = this.getSitePlan( plan ),
 				classes = classNames( 'plans-compare__action-cell', {
 					'is-selected': this.isSelected( plan )

@@ -163,6 +163,42 @@ describe( 'reducer', () => {
 			} );
 		} );
 
+		it( 'should update on rotate', () => {
+			const state = crop( {
+				topRatio: 0.4,
+				leftRatio: 0.5,
+				widthRatio: 0.4,
+				heightRatio: 0.7
+			}, {
+				type: IMAGE_EDITOR_ROTATE_COUNTERCLOCKWISE
+			} );
+
+			expect( state ).to.have.all.keys( 'topRatio', 'leftRatio', 'widthRatio', 'heightRatio' );
+
+			expect( state.topRatio ).to.be.within( 0.09, 0.11 );
+			expect( state.leftRatio ).to.be.within( 0.39, 0.41 );
+			expect( state.widthRatio ).to.be.within( 0.69, 0.71 );
+			expect( state.heightRatio ).to.be.within( 0.39, 0.41 );
+		} );
+
+		it( 'should update on flip', () => {
+			const state = crop( {
+				topRatio: 0.4,
+				leftRatio: 0.5,
+				widthRatio: 0.4,
+				heightRatio: 0.7
+			}, {
+				type: IMAGE_EDITOR_FLIP
+			} );
+
+			expect( state ).to.have.all.keys( 'topRatio', 'leftRatio', 'widthRatio', 'heightRatio' );
+
+			expect( state.topRatio ).to.be.within( 0.39, 0.41 );
+			expect( state.leftRatio ).to.be.within( 0.09, 0.11 );
+			expect( state.widthRatio ).to.be.within( 0.39, 0.41 );
+			expect( state.heightRatio ).to.be.within( 0.69, 0.71 );
+		} );
+
 		it( 'should reset', () => {
 			const state = crop( undefined, {
 				type: IMAGE_EDITOR_STATE_RESET

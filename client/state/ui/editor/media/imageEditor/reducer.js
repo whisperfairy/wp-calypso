@@ -101,6 +101,17 @@ export function crop( state = defaultCrop, action ) {
 				widthRatio: action.widthRatio,
 				heightRatio: action.heightRatio
 			} );
+		case IMAGE_EDITOR_ROTATE_COUNTERCLOCKWISE:
+			return {
+				topRatio: 1 - state.widthRatio - state.leftRatio,
+				leftRatio: state.topRatio,
+				widthRatio: state.heightRatio,
+				heightRatio: state.widthRatio
+			};
+		case IMAGE_EDITOR_FLIP:
+			return Object.assign( {}, state, {
+				leftRatio: 1 - state.widthRatio - state.leftRatio
+			} );
 		case IMAGE_EDITOR_STATE_RESET:
 			return Object.assign( {}, defaultCrop );
 	}

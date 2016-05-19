@@ -130,21 +130,6 @@ const MediaModalImageEditorCanvas = React.createClass( {
 		canvas.width = rotated ? imageHeight : imageWidth;
 		canvas.height = rotated ? imageWidth : imageHeight;
 
-		const canvasX = - 50 * this.props.crop.widthRatio - 100 * this.props.crop.leftRatio;
-		const canvasY = - 50 * this.props.crop.heightRatio - 100 * this.props.crop.topRatio;
-
-		canvas.style.top = 50 + '%';
-		canvas.style.left = 50 + '%';
-		canvas.style.transform = 'translate(' + canvasX + '%, ' + canvasY + '%)';
-		canvas.style.maxWidth = ( 85 / this.props.crop.widthRatio ) + '%';
-		canvas.style.maxHeight = ( 85 / this.props.crop.heightRatio ) + '%';
-
-		this.props.setImageEditorCropBounds(
-			canvas.offsetTop - canvas.offsetHeight * -canvasY / 100,
-			canvas.offsetLeft - canvas.offsetWidth * -canvasX / 100,
-			canvas.offsetTop + canvas.offsetHeight * ( 1 + canvasY / 100 ),
-			canvas.offsetLeft + canvas.offsetWidth * ( 1 + canvasX / 100 ) );
-
 		const context = canvas.getContext( '2d' );
 
 		context.clearRect( 0, 0, canvas.width, canvas.height );
@@ -160,6 +145,26 @@ const MediaModalImageEditorCanvas = React.createClass( {
 		context.drawImage( this.image, -imageWidth / 2, -imageHeight / 2 );
 
 		context.restore();
+
+		this.updateCanvasPosition();
+	},
+
+	updateCanvasPosition() {
+		const canvas = ReactDom.findDOMNode( this.refs.canvas );
+		const canvasX = - 50 * this.props.crop.widthRatio - 100 * this.props.crop.leftRatio;
+		const canvasY = - 50 * this.props.crop.heightRatio - 100 * this.props.crop.topRatio;
+
+		canvas.style.top = 50 + '%';
+		canvas.style.left = 50 + '%';
+		canvas.style.transform = 'translate(' + canvasX + '%, ' + canvasY + '%)';
+		canvas.style.maxWidth = ( 85 / this.props.crop.widthRatio ) + '%';
+		canvas.style.maxHeight = ( 85 / this.props.crop.heightRatio ) + '%';
+
+		this.props.setImageEditorCropBounds(
+			canvas.offsetTop - canvas.offsetHeight * -canvasY / 100,
+			canvas.offsetLeft - canvas.offsetWidth * -canvasX / 100,
+			canvas.offsetTop + canvas.offsetHeight * ( 1 + canvasY / 100 ),
+			canvas.offsetLeft + canvas.offsetWidth * ( 1 + canvasX / 100 ) );
 	},
 
 	preventDrag( event ) {

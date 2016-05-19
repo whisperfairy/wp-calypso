@@ -84,18 +84,17 @@ const MediaModalImageEditorCrop = React.createClass( {
 		}
 
 		if ( this.props.aspectRatio !== newProps.aspectRatio ) {
-			this.updateCrop( this.getDefaultState( newProps ), newProps );
-			this.applyCrop();
+			this.updateCrop( this.getDefaultState( newProps ), newProps, this.applyCrop );
 		}
 	},
 
-	updateCrop( newValues, props ) {
+	updateCrop( newValues, props, callback ) {
 		props = props || this.props;
 
 		const aspectRatio = props.aspectRatio;
 
 		if ( aspectRatio === AspectRatios.FREE ) {
-			this.setState( newValues );
+			this.setState( newValues, callback );
 			return;
 		}
 
@@ -148,7 +147,7 @@ const MediaModalImageEditorCrop = React.createClass( {
 			newValues.right = newState.left + finalWidth;
 		}
 
-		this.setState( newValues );
+		this.setState( newValues, callback );
 	},
 
 	onTopLeftDrag( x, y ) {

@@ -183,8 +183,9 @@ const PostEditor = React.createClass( {
 		autosave: React.PropTypes.func,
 		setPostPrivate: React.PropTypes.func,
 		setPostPublished: React.PropTypes.func,
+		setEditorModePreference: React.PropTypes.func,
 		resetRawContent: React.PropTypes.func,
-		preferences: React.PropTypes.object,
+		editorModePreference: React.PropTypes.string,
 		sites: React.PropTypes.object
 	},
 

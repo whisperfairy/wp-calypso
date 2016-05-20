@@ -4,18 +4,23 @@
 import React, { PropTypes } from 'react';
 import PureComponent from 'react-pure-render/component';
 
-export default class TermSelectorNoResults extends PureComponent {
+/**
+ * Internal dependencies
+ */
+import localize from 'lib/mixins/i18n/localize';
+
+class TermSelectorNoResults extends PureComponent {
 	constructor( props ) {
 		super( props );
 	}
 
 	render() {
-		const { createLink } = this.props;
+		const { createLink, translate } = this.props;
 		let createMessage;
-		let noResultsMessage = this.translate( 'No results. Please try a different search.' );
+		let noResultsMessage = translate( 'No results. Please try a different search.' );
 
 		if ( createLink ) {
-			createMessage = this.translate( 'You may want to {{a}}create a new category{{/a}}.', {
+			createMessage = translate( 'You may want to {{a}}create a new category{{/a}}.', {
 				context: 'Menus: item search/listing results',
 				comment: 'This is used when no categories match the given search, or if there are no categories at all.',
 				components: {
@@ -34,5 +39,8 @@ export default class TermSelectorNoResults extends PureComponent {
 }
 
 TermSelectorNoResults.propTypes = {
-	createLink: PropTypes.string
+	createLink: PropTypes.string,
+	translate: PropTypes.func
 };
+
+export default localize( TermSelectorNoResults );

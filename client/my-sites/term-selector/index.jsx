@@ -19,6 +19,8 @@ import includes from 'lodash/includes';
 import NoResults from './no-results';
 import analytics from 'lib/analytics';
 import Search from './search';
+import TermSelectorList from './list';
+import localize from 'lib/mixins/i18n/localize';
 
 /**
 * Module Constants
@@ -62,8 +64,20 @@ class TermSelector extends Component {
 	}
 
 	componentWillMount() {
-		this.debouncedSearch = debounce( function() {
-			this.props.onSearch( this.state.searchTerm );
+		this.debouncedSearch = debounce( function( newSearch ) {
+			console.log( 'here', newSearch );
+			console.log( 'searchTerm', this.state.searchTerm );
+
+			if ( this.state.searchTerm && ! newSearch.length ) {
+				//this.props.onSearch( null );
+			}
+
+			if ( newSearch !== this.state.searchTerm ) {
+				console.log( 'thar' );
+				//analytics.ga.recordEvent( this.props.analyticsPrefix, 'Performed Category Search' );
+				this.setState( { searchTerm: newSearch } );
+				//this.debouncedSearch();
+			}
 		}.bind( this ), SEARCH_DEBOUNCE_TIME_MS );
 	}
 
@@ -96,91 +110,17 @@ class TermSelector extends Component {
 		}
 	}
 
-	renderItem( item ) {
-		const { multiple, analyticsPrefix, defaultCategoryId, onChange } = this.props;
-		const { selectedIds } = this.state;
-		const itemId = item.ID;
-		const name = unescapeString( item.name ) || this.translate( 'Untitled' );
-		const checked = includes( selectedIds, itemId );
-		const inputType = multiple ? 'checkbox' : 'radio';
-		const domId = camelCase( analyticsPrefix ) + '-option-' + itemId;
-		let disabled;
-
-		if ( multiple && checked && defaultCategoryId &&
-				( 1 === selectedIds.length ) &&
-				( defaultCategoryId === itemId ) ) {
-			disabled = true;
-		}
-
-		const input = (
-			<input id={ domId } type={ inputType } name="terms"
-				value={ itemId }
-				onChange={ onChange.bind( null, item ) }
-				disabled={ disabled }
-				checked={ checked } />
-		);
-
-		return (
-			<li key={ 'category-' + itemId }>
-				<label>{ input } { name }</label>
-				{ item.items ? this.renderHierarchy( item.items, true ) : null }
-			</li>
-		);
-	}
-
 	onSearch( event ) {
-		let newSearch = event.target.value;
-
-		if ( this.state.searchTerm && ! newSearch.length ) {
-			this.props.onSearch( null );
-		}
-
-		if ( newSearch !== this.state.searchTerm ) {
-			analytics.ga.recordEvent( this.props.analyticsPrefix, 'Performed Category Search' );
-			this.setState( { searchTerm: event.target.value } );
-			this.debouncedSearch();
-		}
-	}
-
-	renderHierarchy( items, isRecursive ) {
-		const depth = isRecursive ? '' : 'depth-0';
-
-		items = sortBranch( items );
-
-		return (
-			<ul className={ depth }>
-				{ items.map( this.renderItem, this ) }
-				{
-					this.props.categoriesFetchingNextPage && ! isRecursive
-					? this.renderPlaceholderItem()
-					: null
-				}
-			</ul>
-		);
-	}
-
-	renderPlaceholderItem() {
-		const inputType = this.props.multiple ? 'checkbox' : 'radio';
-
-		return (
-			<li>
-				<input className="placeholder-text" type={ inputType } name="terms" disabled={ true } />
-				<label><span className="placeholder-text">Loading list of options...</span></label>
-			</li>
-		);
-	}
-
-	renderPlaceholder() {
-		return ( <ul>{ this.renderPlaceholderItem() }</ul> );
+		
 	}
 
 	render() {
-		const { children, categories, className, categoriesFound, searchThreshold, categoriesFetchingNextPage } = this.props;
+		const { children, className, categoriesFound, searchThreshold, categoriesFetchingNextPage, taxonomy } = this.props;
 		const numberCategories = categoriesFound || 0;
 		const showSearch = ( numberCategories > searchThreshold ) || this.state.searchTerm;
 
 		const classes = classNames(
-			'category-selector',
+			'term-selector',
 			className, {
 				'is-loading': categoriesFetchingNextPage,
 				'is-compact': ! showSearch && ! categoriesFetchingNextPage
@@ -188,13 +128,11 @@ class TermSelector extends Component {
 		);
 
 		return (
-			<div onScroll={ this.checkScrollPosition } className={ classes } ref="wrapper">
+			<div className={ classes } ref="wrapper">
 				{ children }
-				{ showSearch && ( <Search searchTerm={ this.state.searchTerm } onSearch={ this.onSearch } /> ) }
+				{ showSearch && ( <Search searchTerm={ this.state.searchTerm } onSearch={ this.debouncedSearch } /> ) }
 				{ this.hasNoSearchResults() && ( <NoResults createLink={ this.props.createLink } /> ) }
-				<form>
-					{ categories ? this.renderHierarchy( categories ) : this.renderPlaceholder() }
-				</form>
+				<TermSelectorList search={ this.state.searchTerm } taxonomy={ taxonomy } />
 			</div>
 		);
 	}
@@ -213,21 +151,19 @@ TermSelector.propTypes = {
 	createLink: PropTypes.string,
 	analyticsPrefix: PropTypes.string,
 	searchThreshold: PropTypes.number,
-	defaultCategoryId: PropTypes.number
+	siteId: PropTypes.number,
+	defaultCategoryId: PropTypes.number,
+	// new shtuff
+	taxonomy: PropTypes.string
 };
 
 TermSelector.defaultProps = {
 	analyticsPrefix: 'Category Selector',
 	searchThreshold: 8,
 	selected: [],
-	defaultCategoryId: null
+	defaultCategoryId: null,
+	taxonomy: 'category'
 };
 
-export default connect(
-	( state, ownProps ) => {
-		return {};
-	},
-	{
+export default localize( TermSelector );
 
-	}
-)( TermSelector );

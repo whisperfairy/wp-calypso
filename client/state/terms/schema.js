@@ -16,7 +16,8 @@ export const termsSchema = {
 								slug: { type: 'string' },
 								description: { type: 'string' },
 								post_count: { type: 'number' },
-								parent: { type: 'number' }
+								parent: { type: 'number' },
+								meta: { type: 'object' }
 							},
 							additionalProperties: false
 						}

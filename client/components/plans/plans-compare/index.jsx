@@ -127,10 +127,11 @@ const PlansCompare = React.createClass( {
 
 	getColumnCount() {
 		if ( ! this.props.selectedSite ) {
-			return 4;
+			return isEnabled( 'upgrades/personal-plan' ) ? 5 : 4;
 		}
 
-		return this.props.selectedSite.jetpack ? 3 : 4;
+		return this.props.selectedSite.jetpack ? 3
+		:	isEnabled( 'upgrades/personal-plan' ) ? 5 : 4;
 	},
 
 	getFeatures() {

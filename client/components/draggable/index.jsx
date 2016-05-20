@@ -74,14 +74,8 @@ export default React.createClass( {
 	},
 
 	onMouseMove( event ) {
-		const bounds = this.props.bounds;
 		let x = event.pageX - this.relativePos.x,
 			y = event.pageY - this.relativePos.y;
-
-		if ( bounds ) {
-			x = Math.max( bounds.left, Math.min( bounds.right - this.props.width, x ) );
-			y = Math.max( bounds.top, Math.min( bounds.bottom - this.props.height, y ) );
-		}
 
 		this.mousePos = { x, y };
 	},
@@ -95,15 +89,21 @@ export default React.createClass( {
 	},
 
 	update() {
-		if ( this.dragging ) {
-			this.frameRequestId = requestAnimationFrame( this.update );
-		}
-
 		if ( ! this.mousePos ) {
+			this.frameRequestId = requestAnimationFrame( this.update );
 			return;
 		}
 
-		const { x, y } = this.mousePos;
+		const bounds = this.props.bounds;
+		let { x, y } = this.mousePos;
+		if ( bounds ) {
+			x = Math.max( bounds.left, Math.min( bounds.right - this.props.width, x ) );
+			y = Math.max( bounds.top, Math.min( bounds.bottom - this.props.height, y ) );
+		}
+
+		if ( this.dragging ) {
+			this.frameRequestId = requestAnimationFrame( this.update );
+		}
 
 		this.props.onDrag( x, y );
 

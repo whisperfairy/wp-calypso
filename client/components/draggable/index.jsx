@@ -40,8 +40,7 @@ export default React.createClass( {
 	getInitialState() {
 		return {
 			x: this.props.x,
-			y: this.props.y,
-			relativePos: null
+			y: this.props.y
 		};
 	},
 
@@ -64,38 +63,55 @@ export default React.createClass( {
 		document.addEventListener( 'mousemove', this.onMouseMove );
 		document.addEventListener( 'mouseup', this.onMouseUp );
 
-		this.setState( {
-			relativePos: {
-				x: event.pageX - this.state.x,
-				y: event.pageY - this.state.y
-			}
-		} );
+		this.dragging = true;
+		this.relativePos = {
+			x: event.pageX - this.state.x,
+			y: event.pageY - this.state.y
+		};
+
+		cancelAnimationFrame( this.frameRequestId );
+		this.frameRequestId = requestAnimationFrame( this.update );
 	},
 
 	onMouseMove( event ) {
-		window.requestAnimationFrame( () => {
-			const bounds = this.props.bounds;
-			let x = event.pageX - this.state.relativePos.x,
-				y = event.pageY - this.state.relativePos.y;
+		const bounds = this.props.bounds;
+		let x = event.pageX - this.relativePos.x,
+			y = event.pageY - this.relativePos.y;
 
-			if ( bounds ) {
-				x = Math.max( bounds.left, Math.min( bounds.right - this.props.width, x ) );
-				y = Math.max( bounds.top, Math.min( bounds.bottom - this.props.height, y ) );
-			}
+		if ( bounds ) {
+			x = Math.max( bounds.left, Math.min( bounds.right - this.props.width, x ) );
+			y = Math.max( bounds.top, Math.min( bounds.bottom - this.props.height, y ) );
+		}
 
-			this.props.onDrag( x, y );
-
-			if ( this.props.controlled ) {
-				return;
-			}
-
-			this.setState( { x, y } );
-		} );
+		this.mousePos = { x, y };
 	},
 
 	onMouseUp() {
+		this.dragging = false;
+		this.mousePos = null;
+		cancelAnimationFrame( this.frameRequestId );
 		this.removeListeners();
 		this.props.onStop();
+	},
+
+	update() {
+		if ( this.dragging ) {
+			this.frameRequestId = requestAnimationFrame( this.update );
+		}
+
+		if ( ! this.mousePos ) {
+			return;
+		}
+
+		const { x, y } = this.mousePos;
+
+		this.props.onDrag( x, y );
+
+		if ( this.props.controlled ) {
+			return;
+		}
+
+		this.setState( { x, y } );
 	},
 
 	removeListeners() {

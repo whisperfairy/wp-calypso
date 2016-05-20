@@ -132,6 +132,7 @@ export function receiveThemeDetails( theme ) {
 		themeDownload: theme.download_uri || undefined,
 		themeTaxonomies: theme.taxonomies,
 		themeStylesheet: theme.stylesheet,
+		themeDemoUri: theme.demo_uri,
 	};
 }
 

@@ -28,6 +28,7 @@ export default ( state = Map(), action ) => {
 					download: action.themeDownload,
 					taxonomies: action.themeTaxonomies,
 					stylesheet: action.themeStylesheet,
+					demo_uri: action.themeDemoUri,
 				} ) );
 		case DESERIALIZE:
 			return Map();

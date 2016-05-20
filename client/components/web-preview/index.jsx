@@ -1,3 +1,5 @@
+/** @ssr-ready **/
+
 /**
  * External dependencies
  */
@@ -61,7 +63,7 @@ const WebPreview = React.createClass( {
 			previewMarkup: null,
 			onLoad: noop,
 			onClose: noop,
-		}
+		};
 	},
 
 	getInitialState() {

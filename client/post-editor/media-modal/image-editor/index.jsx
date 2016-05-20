@@ -76,10 +76,12 @@ const MediaModalImageEditor = React.createClass( {
 	},
 
 	onImageExtracted( blob ) {
+		const mimeType = MediaUtils.getMimeType( this.props.fileName );
+
 		MediaActions.add( this.props.site.ID, {
 			fileName: this.props.fileName,
 			fileContents: blob,
-			mimeType: blob.type
+			mimeType: mimeType
 		} );
 	},
 

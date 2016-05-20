@@ -4,6 +4,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { connect } from 'react-redux';
+import isEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 
 /**
@@ -58,7 +59,6 @@ const MediaModalImageEditorCanvas = React.createClass( {
 	componentWillReceiveProps( newProps ) {
 		if ( this.props.src !== newProps.src ) {
 			this.initImage( newProps.src );
-			return;
 		}
 	},
 
@@ -83,10 +83,12 @@ const MediaModalImageEditorCanvas = React.createClass( {
 		}
 
 		this.drawImage();
+		this.updateCanvasPosition();
 	},
 
 	componentDidUpdate() {
 		this.drawImage();
+		this.updateCanvasPosition();
 	},
 
 	toBlob( callback ) {
@@ -145,20 +147,12 @@ const MediaModalImageEditorCanvas = React.createClass( {
 		context.drawImage( this.image, -imageWidth / 2, -imageHeight / 2 );
 
 		context.restore();
-
-		this.updateCanvasPosition();
 	},
 
 	updateCanvasPosition() {
 		const canvas = ReactDom.findDOMNode( this.refs.canvas );
 		const canvasX = - 50 * this.props.crop.widthRatio - 100 * this.props.crop.leftRatio;
 		const canvasY = - 50 * this.props.crop.heightRatio - 100 * this.props.crop.topRatio;
-
-		canvas.style.top = 50 + '%';
-		canvas.style.left = 50 + '%';
-		canvas.style.transform = 'translate(' + canvasX + '%, ' + canvasY + '%)';
-		canvas.style.maxWidth = ( 85 / this.props.crop.widthRatio ) + '%';
-		canvas.style.maxHeight = ( 85 / this.props.crop.heightRatio ) + '%';
 
 		this.props.setImageEditorCropBounds(
 			canvas.offsetTop - canvas.offsetHeight * -canvasY / 100,
@@ -181,11 +175,23 @@ const MediaModalImageEditorCanvas = React.createClass( {
 	},
 
 	render() {
+		const canvasX = - 50 * this.props.crop.widthRatio - 100 * this.props.crop.leftRatio;
+		const canvasY = - 50 * this.props.crop.heightRatio - 100 * this.props.crop.topRatio;
+
+		const canvasStyle = {
+			top: 50 + '%',
+			left: 50 + '%',
+			transform: 'translate(' + canvasX + '%, ' + canvasY + '%)',
+			maxWidth: ( 85 / this.props.crop.widthRatio ) + '%',
+			maxHeight: ( 85 / this.props.crop.heightRatio ) + '%'
+		};
+
 		return (
 			<div className="editor-media-modal-image-editor__canvas-container">
 				{ this.renderCrop() }
 				<canvas
 					ref="canvas"
+					style={ canvasStyle }
 					onMouseDown={ this.preventDrag }
 					className="editor-media-modal-image-editor__canvas" />
 			</div>

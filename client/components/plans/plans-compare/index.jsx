@@ -32,6 +32,8 @@ import SidebarNavigation from 'my-sites/sidebar-navigation';
 import { SUBMITTING_WPCOM_REQUEST } from 'lib/store-transactions/step-types';
 import QueryPlans from 'components/data/query-plans';
 
+const hidePersonalPlan = plan => ! isEnabled( 'upgrades/personal-plan' ) && plan.product_slug === 'personal-bundle';
+
 const PlansCompare = React.createClass( {
 	mixins: [ observe( 'features' ) ],
 
@@ -179,7 +181,7 @@ const PlansCompare = React.createClass( {
 			planElements = [ <th className="plans-compare__header-cell" key="placeholder" /> ];
 
 			planElements = planElements.concat( plans.map( ( plan ) => {
-				if ( ! isEnabled( 'upgrades/personal-plan' ) && plan.product_slug === 'personal-bundle' ) {
+				if ( hidePersonalPlan( plan ) ) {
 					return null;
 				}
 
@@ -245,7 +247,7 @@ const PlansCompare = React.createClass( {
 
 			rows = features.map( ( feature ) => {
 				const planFeatures = plans.map( ( plan ) => {
-					if ( ! isEnabled( 'upgrades/personal-plan' ) && plan.product_slug === 'personal-bundle' ) {
+					if ( hidePersonalPlan( plan ) ) {
 						return null;
 					}
 
@@ -310,7 +312,7 @@ const PlansCompare = React.createClass( {
 		let cells = [ <td className="plans-compare__action-cell" key="placeholder" /> ];
 
 		cells = cells.concat( plans.map( ( plan ) => {
-			if ( ! isEnabled( 'upgrades/personal-plan' ) && plan.product_slug === 'personal-bundle' ) {
+			if ( hidePersonalPlan( plan ) ) {
 				return null;
 			}
 

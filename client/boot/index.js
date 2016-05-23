@@ -208,6 +208,10 @@ function reduxStoreReady( reduxStore ) {
 		require( 'lib/network-connection' ).init( reduxStore );
 	}
 
+	if ( config.isEnabled( 'css-hot-reload' ) ) {
+		require( 'lib/css-hot-reload' ).init(  reduxStore  );
+	}
+
 	// Render Layout only for non-isomorphic sections, unless logged-in.
 	// Isomorphic sections will take care of rendering their Layout last themselves,
 	// unless in logged-in mode, where we can't do that yet.

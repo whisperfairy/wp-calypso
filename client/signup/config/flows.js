@@ -77,6 +77,15 @@ const flows = {
 		lastModified: '2016-01-21'
 	},
 
+	personal: {
+		steps: [ 'themes', 'domains', 'user' ],
+		destination: function( dependencies ) {
+			return '/plans/select/personal/' + dependencies.siteSlug;
+		},
+		description: 'Create an account and a blog and then add the personal plan to the users cart.',
+		lastModified: '2016-01-21'
+	},
+
 	free: {
 		steps: [ 'themes', 'domains', 'user' ],
 		destination: getSiteDestination,

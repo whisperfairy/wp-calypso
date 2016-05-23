@@ -289,10 +289,14 @@
 .reader-start-card {
 
 	&:last-child {
-		animation: right-slide .6s ease-out 5s 1 forwards;
+		animation: slide-right .7s ease-out 5s 1 forwards;
 	}
 
-	@-webkit-keyframes right-slide {
+	@-webkit-keyframes slide-right {
+
+		20% {
+			transform: translateX( -5% );
+		}
 
 		80% {
 			transform: translateX( 107% );
@@ -303,7 +307,11 @@
     	}
 	}
 
-	@keyframes right-slide {
+	@keyframes slide-right {
+
+		20% {
+			transform: translateX( -5% );
+		}
 
 		80% {
 			transform: translateX( 107% );

@@ -15,6 +15,10 @@ import {
 import { itemsSchema } from './schema';
 import { isValidStateWithSchema } from 'state/utils';
 
+function normalizePosts( posts ) {
+
+}
+
 /**
  * Tracks all known post objects, indexed by post ID.
  *
@@ -25,7 +29,8 @@ import { isValidStateWithSchema } from 'state/utils';
 export function items( state = {}, action ) {
 	switch ( action.type ) {
 		case READER_POSTS_RECEIVE:
-			return Object.assign( {}, state, keyBy( action.posts, 'global_ID' ) );
+			const normalizedPosts = normalizePosts( action.posts );
+			return Object.assign( {}, state, keyBy( normalizePosts, 'global_ID' ) );
 		case SERIALIZE:
 			return state;
 		case DESERIALIZE:

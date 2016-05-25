@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-var ReactDom = require( 'react-dom' ),
-	React = require( 'react' ),
+var React = require( 'react' ),
 	wrapWithClickOutside = require( 'react-click-outside' ),
 	noop = require( 'lodash/noop' );
 
@@ -47,9 +46,21 @@ const SitePicker = React.createClass( {
 		}.bind( this ), 200 );
 	},
 
+	componentWillMount: function() {
+		window.addEventListener( 'keyup', this.keyUp, false );
+	},
+
 	componentWillUnmount: function() {
+		window.removeEventListener( 'keyup', this.keyUp, false );
 		clearTimeout( this._autofocusTimeout );
 		this._autofocusTimeout = null;
+	},
+
+	keyUp: function( event ) {
+		// this handles Escape key that was pressed outside the search box
+		if ( event.keyCode === 27 && event.target.tagName !== 'INPUT' ) {
+			this.closePicker();
+		}
 	},
 
 	onClose: function( event ) {
@@ -63,11 +74,15 @@ const SitePicker = React.createClass( {
 		window.scrollTo( 0, 0 );
 	},
 
-	handleClickOutside: function() {
+	closePicker: function() {
 		if ( this.props.layoutFocus && this.props.layoutFocus.getCurrent() === 'sites' ) {
-			this.props.layoutFocus && this.props.layoutFocus.set( 'sidebar' );
+			this.props.layoutFocus.set( 'sidebar' );
 			this.scrollToTop();
 		}
+	},
+
+	handleClickOutside: function() {
+		this.closePicker();
 	},
 
 	render: function() {

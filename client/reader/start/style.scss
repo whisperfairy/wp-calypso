@@ -51,7 +51,6 @@
 		display: inline-block;
 	    margin: 8px 5px 8px 2px;
 	    width: 100%;
-	}
 
 	&:first-child {
 
@@ -71,6 +70,10 @@
 		@include breakpoint( ">480px" ) {
 			margin-bottom: 80px;
 		}
+	}
+
+	.button {
+		overflow: visible;
 	}
 
 	.follow-button {

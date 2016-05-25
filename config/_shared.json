@@ -142,5 +142,5 @@
 		{ "value": 451, "langSlug": "zh-sg", "name": "zh-sg - 中文(简体)" },
 		{ "value": 452, "langSlug": "zh-tw", "name": "zh-tw - 中文(繁體)", "popular": 14 }
 	],
-	"project": "project"
+	"project": "calypso"
 }

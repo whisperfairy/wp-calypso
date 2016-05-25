@@ -7,6 +7,7 @@ import values from 'lodash/values';
 import omit from 'lodash/omit';
 import map from 'lodash/map';
 import difference from 'lodash/difference';
+import get from 'lodash/get';
 
 /**
  * Internal dependencies
@@ -125,13 +126,27 @@ export default class QueryManager {
 		}
 
 		const queryKey = this.constructor.QueryKey.stringify( query );
-		if ( ! this.data.queries[ queryKey ] ) {
+		const itemKeys = get( this.data.queries, [ queryKey, 'itemKeys' ] );
+		if ( ! itemKeys ) {
 			return null;
 		}
 
-		return this.data.queries[ queryKey ].map( ( itemKey ) => {
+		return itemKeys.map( ( itemKey ) => {
 			return this.data.items[ itemKey ];
 		} );
+	}
+
+	/**
+	 * Returns the number of total known items for the specified query, as
+	 * included in the REST API posts response. Returns null if the query is
+	 * not known.
+	 *
+	 * @param  {Object}  query Query object
+	 * @return {?Number}       Found items for query
+	 */
+	getFound( query ) {
+		const queryKey = this.constructor.QueryKey.stringify( query );
+		return get( this.data.queries, [ queryKey, 'found' ], null );
 	}
 
 	/**
@@ -146,6 +161,7 @@ export default class QueryManager {
 	 * @param  {Boolean}        options.patch      Apply changes as partial
 	 * @param  {Object}         options.query      Query set to set or replace
 	 * @param  {Boolean}        options.mergeQuery Add to existing query set
+	 * @param  {Number}         options.found      Total found items for query
 	 * @return {QueryManager}                      New instance if changed, or
 	 *                                             same instance otherwise
 	 */
@@ -195,60 +211,101 @@ export default class QueryManager {
 			receivedQueryKey = this.constructor.QueryKey.stringify( options.query );
 			isNewlyReceivedQueryKey = ! this.data.queries[ receivedQueryKey ];
 
-			let nextItemsForReceivedQuery;
-			if ( ! isEqual( this.data.queries[ receivedQueryKey ], receivedItemKeys ) ) {
-				// Consider modified if either the current query set is not
-				// tracked or if the keys differ from currently known set
-				isModified = true;
-
+			let nextQueryReceivedItemKeys;
+			if ( isNewlyReceivedQueryKey || ! isEqual( this.data.queries[ receivedQueryKey ].itemKeys, receivedItemKeys ) ) {
 				if ( options.mergeQuery && ! isNewlyReceivedQueryKey ) {
 					// When merging into a query where items already exist,
 					// omit incoming keys from existing set. These keys will
 					// be restored below during match testing.
-					nextItemsForReceivedQuery = difference( this.data.queries[ receivedQueryKey ], receivedItemKeys );
+					nextQueryReceivedItemKeys = difference( this.data.queries[ receivedQueryKey ].itemKeys, receivedItemKeys );
 				} else {
 					// If not merging, assign incoming keys as next items
-					nextItemsForReceivedQuery = receivedItemKeys;
+					nextQueryReceivedItemKeys = receivedItemKeys;
+				}
+			}
+
+			let nextQueryFound;
+			if ( options.found >= 0 && options.found !== get( nextQueries, [ receivedQueryKey, 'found' ] ) ) {
+				nextQueryFound = options.found;
+			}
+
+			if ( nextQueryReceivedItemKeys || nextQueryFound >= 0 ) {
+				// Consider modified if either the current query set is not
+				// tracked or if the keys differ from currently known set
+				isModified = true;
+				const nextReceivedQuery = Object.assign( {}, nextQueries[ receivedQueryKey ] );
+
+				if ( nextQueryReceivedItemKeys ) {
+					nextReceivedQuery.itemKeys = nextQueryReceivedItemKeys;
+				}
+
+				if ( nextQueryFound >= 0 ) {
+					nextReceivedQuery.found = nextQueryFound;
 				}
 
 				nextQueries = Object.assign( {}, nextQueries, {
-					[ receivedQueryKey ]: nextItemsForReceivedQuery
+					[ receivedQueryKey ]: nextReceivedQuery
 				} );
 			}
 		}
 
-		nextQueries = reduce( nextQueries, ( memo, originalItems, queryKey ) => {
-			memo[ queryKey ] = originalItems;
+		nextQueries = reduce( nextQueries, ( memo, queryDetails, queryKey ) => {
+			memo[ queryKey ] = queryDetails;
 
-			if ( receivedQueryKey && receivedQueryKey === queryKey &&
-					( isNewlyReceivedQueryKey || ! options.mergeQuery ) ) {
+			const isReceivedQueryKey = receivedQueryKey && receivedQueryKey === queryKey;
+			if ( isReceivedQueryKey && ( isNewlyReceivedQueryKey || ! options.mergeQuery ) ) {
 				// We can save the effort testing against received items in
 				// the current query, since we know they'll match
 				return memo;
 			}
+
+			// Found counts should not be adjusted for the received query if
+			// merging into existing items
+			const shouldAdjustFoundCount = ! isReceivedQueryKey;
 
 			const query = this.constructor.QueryKey.parse( queryKey );
 			items.forEach( ( receivedItem ) => {
 				// Find item in known data for query
 				const receivedItemKey = receivedItem[ this.options.itemKey ];
 				const updatedItem = nextItems[ receivedItemKey ];
-				const index = memo[ queryKey ].indexOf( receivedItemKey );
+				const index = memo[ queryKey ].itemKeys.indexOf( receivedItemKey );
 
 				if ( -1 !== index ) {
 					// Item already exists in query, check to see whether the
 					// updated item is being removed or no longer matches
 					if ( ! updatedItem || ! this.matches( query, updatedItem ) ) {
-						memo[ queryKey ] = [
-							...memo[ queryKey ].slice( 0, index ),
-							...memo[ queryKey ].slice( index + 1 )
+						// Create a copy of the original details to avoid mutating
+						if ( memo[ queryKey ] === queryDetails ) {
+							memo[ queryKey ] = Object.assign( {}, queryDetails );
+						}
+
+						// Omit item by slicing previous and next
+						memo[ queryKey ].itemKeys = [
+							...memo[ queryKey ].itemKeys.slice( 0, index ),
+							...memo[ queryKey ].itemKeys.slice( index + 1 )
 						];
+
+						// Decrement found count for query
+						if ( shouldAdjustFoundCount && Number.isFinite( memo[ queryKey ].found ) ) {
+							memo[ queryKey ].found--;
+						}
 					}
 				} else if ( updatedItem && this.matches( query, updatedItem ) ) {
+					// Create a copy of the original details to avoid mutating
+					if ( memo[ queryKey ] === queryDetails ) {
+						memo[ queryKey ] = Object.assign( {}, queryDetails );
+					}
+
+					// Increment found count for query
+					if ( shouldAdjustFoundCount && Number.isFinite( memo[ queryKey ].found ) ) {
+						memo[ queryKey ].found++;
+					}
+
 					// A matching item should be inserted into the query set
-					memo[ queryKey ] = ( memo[ queryKey ] || [] ).concat( receivedItemKey );
+					memo[ queryKey ].itemKeys = get( memo, [ queryKey, 'itemKeys' ], [] ).concat( receivedItemKey );
 
 					// Re-sort the set
-					memo[ queryKey ].sort( ( keyA, keyB ) => {
+					memo[ queryKey ].itemKeys.sort( ( keyA, keyB ) => {
 						if ( ! nextItems[ keyA ] || ! nextItems[ keyB ] ) {
 							// One of the items has yet to be removed from the
 							// set at this point in iteration, so don't bother
@@ -261,7 +318,7 @@ export default class QueryManager {
 				}
 			} );
 
-			isModified = isModified || memo[ queryKey ] !== originalItems;
+			isModified = isModified || memo[ queryKey ] !== queryDetails;
 			return memo;
 		}, {} );
 

@@ -59,6 +59,13 @@
 		}
 	}
 
+	&:first-child {
+
+		@include breakpoint( "<480px" ) {
+			margin-top: 20px;
+		}
+	}
+
 	&:nth-child( even ),
 	&:last-child {
 		margin-right: 0;
@@ -70,10 +77,6 @@
 		@include breakpoint( ">480px" ) {
 			margin-bottom: 80px;
 		}
-	}
-
-	.button {
-		overflow: visible;
 	}
 
 	.follow-button {

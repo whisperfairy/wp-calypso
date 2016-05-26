@@ -178,8 +178,6 @@ const MediaModalImageEditorCanvas = React.createClass( {
 		const canvasY = - 50 * this.props.crop.heightRatio - 100 * this.props.crop.topRatio;
 
 		const canvasStyle = {
-			top: 50 + '%',
-			left: 50 + '%',
 			transform: 'translate(' + canvasX + '%, ' + canvasY + '%)',
 			maxWidth: ( 85 / this.props.crop.widthRatio ) + '%',
 			maxHeight: ( 85 / this.props.crop.heightRatio ) + '%'

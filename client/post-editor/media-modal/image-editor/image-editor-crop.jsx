@@ -113,11 +113,11 @@ const MediaModalImageEditorCrop = React.createClass( {
 				imageWidth = bounds.rightBound - bounds.leftBound;
 				imageHeight = bounds.bottomBound - bounds.topBound;
 				break;
-			case AspectRatios.ASPECT_1x1:
+			case AspectRatios.ASPECT_1X1:
 				imageWidth = 1;
 				imageHeight = 1;
 				break;
-			case AspectRatios.ASPECT_16x9:
+			case AspectRatios.ASPECT_16X9:
 				imageWidth = rotated ? 9 : 16;
 				imageHeight = rotated ? 16 : 9;
 				break;
@@ -221,8 +221,7 @@ const MediaModalImageEditorCrop = React.createClass( {
 						left: left + 'px',
 						width: width + 'px',
 						height: Math.max( 0, top - this.props.bounds.topBound ) + 'px'
-					} }>
-				</div>
+					} }/>
 				<div
 					className="editor-media-modal-image-editor__crop-background"
 					style={ {
@@ -230,8 +229,7 @@ const MediaModalImageEditorCrop = React.createClass( {
 						left: this.props.bounds.leftBound + 'px',
 						width: Math.max( 0, left - this.props.bounds.leftBound ) + 'px',
 						height: Math.max( 0, this.props.bounds.bottomBound - this.props.bounds.topBound ) + 'px'
-					} }>
-				</div>
+					} }/>
 				<div
 					className="editor-media-modal-image-editor__crop-background"
 					style={ {
@@ -239,8 +237,7 @@ const MediaModalImageEditorCrop = React.createClass( {
 						left: left + 'px',
 						width: width + 'px',
 						height: Math.max( 0, this.props.bounds.bottomBound - bottom ) + 'px'
-					} }>
-				</div>
+					} }/>
 				<div
 					className="editor-media-modal-image-editor__crop-background"
 					style={ {
@@ -248,8 +245,7 @@ const MediaModalImageEditorCrop = React.createClass( {
 						left: right + 'px',
 						width: Math.max( 0, this.props.bounds.rightBound - right ) + 'px',
 						height: Math.max( 0, this.props.bounds.bottomBound - this.props.bounds.topBound ) + 'px'
-					} }>
-				</div>
+					} }/>
 				<Draggable
 					ref="border"
 					onDrag={ this.onBorderDrag }

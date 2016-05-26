@@ -110,8 +110,8 @@ const MediaModalImageEditorToolbar = React.createClass( {
 						className="popover is-dialog-visible">
 					<PopoverMenuItem action={ AspectRatios.FREE }>{ this.translate( 'Free' ) }</PopoverMenuItem>
 					<PopoverMenuItem action={ AspectRatios.ORIGINAL }>{ this.translate( 'Original' ) }</PopoverMenuItem>
-					<PopoverMenuItem action={ AspectRatios.ASPECT_1x1 }>{ this.translate( 'Square' ) }</PopoverMenuItem>
-					<PopoverMenuItem action={ AspectRatios.ASPECT_16x9 }>{ this.translate( '16:9' ) }</PopoverMenuItem>
+					<PopoverMenuItem action={ AspectRatios.ASPECT_1X1 }>{ this.translate( 'Square' ) }</PopoverMenuItem>
+					<PopoverMenuItem action={ AspectRatios.ASPECT_16X9 }>{ this.translate( '16:9' ) }</PopoverMenuItem>
 					<PopoverMenuItem action={ AspectRatios.ASPECT_4X3 }>{ this.translate( '4:3' ) }</PopoverMenuItem>
 					<PopoverMenuItem action={ AspectRatios.ASPECT_3X2 }>{ this.translate( '3:2' ) }</PopoverMenuItem>
 				</PopoverMenu>

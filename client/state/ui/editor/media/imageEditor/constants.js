@@ -1,13 +1,8 @@
-/**
- * External dependencies
- */
-import keyMirror from 'key-mirror';
-
-export const AspectRatios = keyMirror( {
-	FREE: null,
-	ORIGINAL: null,
-	ASPECT_1x1: null,
-	ASPECT_16x9: null,
-	ASPECT_4X3: null,
-	ASPECT_3X2: null
-} );
+export const AspectRatios = {
+	FREE: 'FREE',
+	ORIGINAL: 'ORIGINAL',
+	ASPECT_1X1: 'ASPECT_1X1',
+	ASPECT_16X9: 'ASPECT_16X9',
+	ASPECT_4X3: 'ASPECT_4X3',
+	ASPECT_3X2: 'ASPECT_3X2'
+};

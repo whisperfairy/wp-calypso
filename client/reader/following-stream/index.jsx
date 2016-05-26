@@ -139,6 +139,7 @@ module.exports = React.createClass( {
 		KeyboardShortcuts.on( 'move-selection-up', this.selectPrevItem );
 		KeyboardShortcuts.on( 'open-selection', this.showSelectedPost );
 		KeyboardShortcuts.on( 'like-selection', this.toggleLikeOnSelectedPost );
+		KeyboardShortcuts.on( 'go-to-top', this.goToTop );
 		window.addEventListener( 'popstate', this._popstate );
 		if ( 'scrollRestoration' in history ) {
 			history.scrollRestoration = 'manual';
@@ -153,6 +154,7 @@ module.exports = React.createClass( {
 		KeyboardShortcuts.off( 'move-selection-up', this.selectPrevItem );
 		KeyboardShortcuts.off( 'open-selection', this.showSelectedPost );
 		KeyboardShortcuts.off( 'like-selection', this.toggleLikeOnSelectedPost );
+		KeyboardShortcuts.off( 'go-to-top', this.goToTop );
 		window.removeEventListener( 'popstate', this._popstate );
 		if ( 'scrollRestoration' in history ) {
 			history.scrollRestoration = 'auto';
@@ -233,6 +235,14 @@ module.exports = React.createClass( {
 		return !! window.location.pathname.match( /^\/read\/(blogs|feeds)\/([0-9]+)\/posts\/([0-9]+)$/i );
 	},
 
+	goToTop: function() {
+		if ( this.state.updateCount && this.state.updateCount > 0 ) {
+			this.showUpdates();
+		} else {
+			FeedStreamStoreActions.selectItem( this.props.store.id, 0 );
+		}
+	},
+
 	selectNextItem: function() {
 		var visibleIndexes = this._list.getVisibleItemIndexes( { offsetTop: HEADER_OFFSET_TOP } ),
 			visibleIndex,
@@ -287,7 +297,7 @@ module.exports = React.createClass( {
 		FeedStreamStoreActions.fetchNextPage( this.props.store.id );
 	},
 
-	handleUpdateClick: function() {
+	showUpdates: function() {
 		this.props.onUpdatesShown();
 		FeedStreamStoreActions.showUpdates( this.props.store.id );
 		if ( this._list ) {
@@ -434,7 +444,7 @@ module.exports = React.createClass( {
 					<h1>{ this.props.listName }</h1>
 				</MobileBackToSidebar>
 
-				<UpdateNotice count={ this.state.updateCount } onClick={ this.handleUpdateClick } />
+				<UpdateNotice count={ this.state.updateCount } onClick={ this.showUpdates } />
 				{ this.props.children }
 				{ body }
 			</Main>

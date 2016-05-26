@@ -11,12 +11,12 @@ import noop from 'lodash/noop';
 import Gridicon from 'components/gridicon';
 import PopoverMenu from 'components/popover/menu';
 import PopoverMenuItem from 'components/popover/menu-item';
-import { AspectRatios } from 'state/ui/editor/media/imageEditor/constants';
+import { AspectRatios } from 'state/ui/editor/image-editor/constants';
 import {
 	imageEditorRotateCounterclockwise,
 	imageEditorFlip,
 	setImageEditorAspectRatio
-} from 'state/ui/editor/media/imageEditor/actions';
+} from 'state/ui/editor/image-editor/actions';
 
 const MediaModalImageEditorToolbar = React.createClass( {
 	displayName: 'MediaModalImageEditorToolbar',

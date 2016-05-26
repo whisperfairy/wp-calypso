@@ -15,8 +15,8 @@ import {
 	getImageEditorTransform,
 	getImageEditorFileInfo,
 	getImageEditorCrop
-} from 'state/ui/editor/media/imageEditor/selectors';
-import { setImageEditorCropBounds } from 'state/ui/editor/media/imageEditor/actions';
+} from 'state/ui/editor/image-editor/selectors';
+import { setImageEditorCropBounds } from 'state/ui/editor/image-editor/actions';
 
 const MediaModalImageEditorCanvas = React.createClass( {
 	displayName: 'MediaModalImageEditorCanvas',

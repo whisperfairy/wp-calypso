@@ -18,10 +18,10 @@ import MediaUtils from 'lib/media/utils';
 import {
 	resetImageEditorState,
 	setImageEditorFileInfo
-} from 'state/ui/editor/media/imageEditor/actions';
+} from 'state/ui/editor/image-editor/actions';
 import {
 	getImageEditorFileInfo
-} from 'state/ui/editor/media/imageEditor/selectors';
+} from 'state/ui/editor/image-editor/selectors';
 
 const MediaModalImageEditor = React.createClass( {
 	displayName: 'MediaModalImageEditor',

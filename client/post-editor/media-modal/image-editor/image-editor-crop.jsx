@@ -16,9 +16,9 @@ import {
 	getImageEditorAspectRatio,
 	getImageEditorTransform,
 	getImageEditorCrop
-} from 'state/ui/editor/media/imageEditor/selectors';
-import { AspectRatios } from 'state/ui/editor/media/imageEditor/constants';
-import { imageEditorCrop } from 'state/ui/editor/media/imageEditor/actions';
+} from 'state/ui/editor/image-editor/selectors';
+import { AspectRatios } from 'state/ui/editor/image-editor/constants';
+import { imageEditorCrop } from 'state/ui/editor/image-editor/actions';
 
 const MediaModalImageEditorCrop = React.createClass( {
 

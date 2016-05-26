@@ -6,7 +6,7 @@
  *
  */
 export function getImageEditorTransform( state ) {
-	return state.ui.editor.media.imageEditor.transform;
+	return state.ui.editor.imageEditor.transform;
 }
 
 /**
@@ -17,7 +17,7 @@ export function getImageEditorTransform( state ) {
  *
  */
 export function getImageEditorFileInfo( state ) {
-	return state.ui.editor.media.imageEditor.fileInfo;
+	return state.ui.editor.imageEditor.fileInfo;
 }
 
 /**
@@ -28,7 +28,7 @@ export function getImageEditorFileInfo( state ) {
  *
  */
 export function imageEditorHasChanges( state ) {
-	return state.ui.editor.media.imageEditor.hasChanges;
+	return state.ui.editor.imageEditor.hasChanges;
 }
 
 /**
@@ -39,7 +39,7 @@ export function imageEditorHasChanges( state ) {
  *
  */
 export function getImageEditorCropBounds( state ) {
-	return state.ui.editor.media.imageEditor.cropBounds;
+	return state.ui.editor.imageEditor.cropBounds;
 }
 
 /**
@@ -50,16 +50,16 @@ export function getImageEditorCropBounds( state ) {
  *
  */
 export function getImageEditorCrop( state ) {
-	return state.ui.editor.media.imageEditor.crop;
+	return state.ui.editor.imageEditor.crop;
 }
 
 /**
  * Returns the crop data for the image editor
  *
  * @param  {Object} state Global state tree
- * @return {Object} one of the AspectRatios as defined in state/ui/editor/media/imageEditor/constants
+ * @return {Object} one of the AspectRatios as defined in state/ui/editor/image-editor/constants
  *
  */
 export function getImageEditorAspectRatio( state ) {
-	return state.ui.editor.media.imageEditor.aspectRatio;
+	return state.ui.editor.imageEditor.aspectRatio;
 }

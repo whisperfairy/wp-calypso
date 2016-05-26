@@ -22,13 +22,11 @@ describe( 'selectors', () => {
 			const transform = getImageEditorTransform( {
 				ui: {
 					editor: {
-						media: {
-							imageEditor: {
-								transform: {
-									degrees: 180,
-									scaleX: -1,
-									scaleY: 2
-								}
+						imageEditor: {
+							transform: {
+								degrees: 180,
+								scaleX: -1,
+								scaleY: 2
 							}
 						}
 					}
@@ -48,12 +46,10 @@ describe( 'selectors', () => {
 			const fileInfo = getImageEditorFileInfo( {
 				ui: {
 					editor: {
-						media: {
-							imageEditor: {
-								fileInfo: {
-									src: 'testSrc',
-									fileName: 'testFileName'
-								}
+						imageEditor: {
+							fileInfo: {
+								src: 'testSrc',
+								fileName: 'testFileName'
 							}
 						}
 					}
@@ -72,10 +68,8 @@ describe( 'selectors', () => {
 			const hasChanges = imageEditorHasChanges( {
 				ui: {
 					editor: {
-						media: {
-							imageEditor: {
-								hasChanges: true
-							}
+						imageEditor: {
+							hasChanges: true
 						}
 					}
 				}
@@ -90,14 +84,12 @@ describe( 'selectors', () => {
 			const bounds = getImageEditorCropBounds( {
 				ui: {
 					editor: {
-						media: {
-							imageEditor: {
-								cropBounds: {
-									topBound: 100,
-									leftBound: 200,
-									bottomBound: 300,
-									rightBound: 400
-								}
+						imageEditor: {
+							cropBounds: {
+								topBound: 100,
+								leftBound: 200,
+								bottomBound: 300,
+								rightBound: 400
 							}
 						}
 					}
@@ -118,14 +110,12 @@ describe( 'selectors', () => {
 			const hasChanges = getImageEditorCrop( {
 				ui: {
 					editor: {
-						media: {
-							imageEditor: {
-								crop: {
-									topRatio: 0.2,
-									leftRatio: 0.3,
-									widthRatio: 0.4,
-									heightRatio: 0.5
-								}
+						imageEditor: {
+							crop: {
+								topRatio: 0.2,
+								leftRatio: 0.3,
+								widthRatio: 0.4,
+								heightRatio: 0.5
 							}
 						}
 					}
@@ -146,10 +136,8 @@ describe( 'selectors', () => {
 			const hasChanges = getImageEditorAspectRatio( {
 				ui: {
 					editor: {
-						media: {
-							imageEditor: {
-								aspectRatio: AspectRatios.FREE
-							}
+						imageEditor: {
+							aspectRatio: AspectRatios.FREE
 						}
 					}
 				}

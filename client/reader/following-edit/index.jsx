@@ -140,8 +140,7 @@ const FollowingEdit = React.createClass( {
 
 	handleAdd: function( newSubscription ) {
 		let newState = {
-			isAttemptingFollow: false,
-			isAddingOpen: false
+			isAttemptingFollow: false
 		};
 
 		// If it's a brand new subscription, re-sort by date followed so
@@ -528,7 +527,7 @@ const FollowingEdit = React.createClass( {
 					onSearchClose={ this.handleNewSubscriptionSearchClose }
 					onFollow={ this.handleFollow }
 					initialSearchString={ this.props.initialFollowUrl }
-					isSearchOpen={ this.state.isAddingOpen }
+					isSearchOpen={ true }
 					ref="feed-search" />
 
 				<SectionHeader className="following-edit__header" label={ this.translate( 'Sites' ) } count={ this.state.totalSubscriptions }>

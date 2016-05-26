@@ -30,6 +30,8 @@ import LocaleSuggestions from 'signup/locale-suggestions';
 import { recordTracksEvent } from 'state/analytics/actions';
 import { getSiteByUrl } from 'state/sites/selectors';
 import Spinner from 'components/spinner';
+import { requestSites } from 'state/sites/actions';
+import { isRequestingSites } from 'state/sites/selectors';
 
 /**
  * Constants
@@ -133,6 +135,9 @@ const LoggedInForm = React.createClass( {
 		const { autoAuthorize, queryObject } = this.props.jetpackConnectAuthorize;
 		debug( 'Checking for auto-auth on mount', autoAuthorize );
 		this.props.recordTracksEvent( 'jpc_auth_view' );
+		if ( ! this.props.isCalypsoStartedConnection ) {
+			this.props.requestSites();
+		}
 		if ( ! this.props.isAlreadyOnSitesList &&
 			! queryObject.already_authorized &&
 			( autoAuthorize || this.props.calypsoStartedConnection || this.props.isSSO ) ) {
@@ -240,6 +245,10 @@ const LoggedInForm = React.createClass( {
 			return this.translate( 'Try again' );
 		}
 
+		if ( this.props.isFetchingSites() ) {
+			return this.translate( 'Preparing authorization' );
+		}
+
 		if ( this.props.isAlreadyOnSitesList || siteReceived ) {
 			return this.translate( 'Browse Available Upgrades' );
 		}
@@ -331,7 +340,7 @@ const LoggedInForm = React.createClass( {
 
 	renderStateAction() {
 		const { authorizeSuccess, siteReceived } = this.props.jetpackConnectAuthorize;
-		if ( this.isAuthorizing() || ( authorizeSuccess && ! siteReceived ) ) {
+		if ( this.props.isFetchingSites() || this.isAuthorizing() || ( authorizeSuccess && ! siteReceived ) ) {
 			return ( <div className="jetpack-connect-logged-in-form__loading">
 				<span>{ this.getButtonText() }</span> <Spinner size={ 20 } duration={ 3000 } />
 			</div> );
@@ -405,12 +414,16 @@ export default connect(
 		const site = state.jetpackConnect.jetpackConnectAuthorize && state.jetpackConnect.jetpackConnectAuthorize.queryObject
 			? getSiteByUrl( state, state.jetpackConnect.jetpackConnectAuthorize.queryObject.site )
 			: null;
+		const isFetchingSites = () => {
+			return isRequestingSites( state );
+		};
 		return {
 			jetpackConnectAuthorize: state.jetpackConnect.jetpackConnectAuthorize,
 			jetpackSSOSessions: state.jetpackConnect.jetpackSSOSessions,
 			jetpackConnectSessions: state.jetpackConnect.jetpackConnectSessions,
-			isAlreadyOnSitesList: !! site
+			isAlreadyOnSitesList: !! site,
+			isFetchingSites
 		};
 	},
-	dispatch => bindActionCreators( { recordTracksEvent, authorize, createAccount, activateManage, goBackToWpAdmin }, dispatch )
+	dispatch => bindActionCreators( { requestSites, recordTracksEvent, authorize, createAccount, activateManage, goBackToWpAdmin }, dispatch )
 )( JetpackConnectAuthorizeForm );

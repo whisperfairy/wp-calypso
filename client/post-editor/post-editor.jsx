@@ -48,6 +48,7 @@ import { setEditorLastDraft, resetEditorLastDraft } from 'state/ui/editor/last-d
 import { isEditorDraftsVisible } from 'state/ui/editor/selectors';
 import { toggleEditorDraftsVisible } from 'state/ui/editor/actions';
 import EditorSidebarHeader from 'post-editor/editor-sidebar/header';
+import EditorUnknownPostType from 'post-editor/editor-unknown-post-type';
 
 const messages = {
 	post: {
@@ -288,6 +289,7 @@ const PostEditor = React.createClass( {
 		}
 		return (
 			<div className="post-editor">
+				<EditorUnknownPostType />
 				<div className="post-editor__inner">
 					<div className="post-editor__content">
 						<EditorMobileNavigation site={ site } onClose={ this.onClose } />

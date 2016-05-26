@@ -89,7 +89,7 @@ const Search = React.createClass( {
 				? debounce( this.props.onSearch, this.props.delayTimeout )
 				: this.props.onSearch;
 		}
-		if ( nextProps.isOpen !== this.props.isOpen ) {
+		if ( nextProps.isOpen !== this.state.isOpen ) {
 			this.setState( { isOpen: nextProps.isOpen } );
 		}
 	},
@@ -231,8 +231,7 @@ const Search = React.createClass( {
 				i18n.translate( 'Search…', { textOnly: true } ),
 
 			enableOpenIcon = ! this.state.isOpen,
-			isOpenOrQueried = this.state.isOpen ||
-				this.props.initialValue;
+			isOpenOrQueried = this.state.isOpen || this.props.initialValue;
 
 		const autocorrect = this.props.disableAutocorrect && {
 			autoComplete: 'off',
@@ -279,7 +278,7 @@ const Search = React.createClass( {
 					aria-hidden={ ! isOpenOrQueried }
 					autoCapitalize="none"
 					{...autocorrect } />
-				{ ( this.state.isOpen && searchValue ) ? this.closeButton() : null }
+				{ this.state.isOpen && searchValue ? this.closeButton() : null }
 			</div>
 		);
 	},

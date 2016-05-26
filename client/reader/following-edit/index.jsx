@@ -556,6 +556,7 @@ const FollowingEdit = React.createClass( {
 					placeholder={ searchPlaceholder }
 					onSearch={ this.doSearch }
 					onSearchClose={ this.toggleSearching }
+					onBlur={ this.toggleSearching }
 					initialValue={ this.props.search }
 					delaySearch={ true }
 					ref="url-search" /> : null }

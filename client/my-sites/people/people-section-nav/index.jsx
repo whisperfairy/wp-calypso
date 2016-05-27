@@ -23,6 +23,7 @@ let PeopleSearch = React.createClass( {
 		return (
 			<Search
 				pinned
+				additionalClasses="is-expanded-to-container"
 				onSearch={ this.doSearch }
 				initialValue={ this.props.search }
 				ref="url-search"

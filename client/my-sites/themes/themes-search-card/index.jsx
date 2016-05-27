@@ -91,6 +91,7 @@ const ThemesSearchCard = React.createClass( {
 
 					<Search
 						pinned={ true }
+						additionalClasses="is-expanded-to-container"
 						onSearch={ this.props.onSearch }
 						initialValue={ this.props.search }
 						ref="url-search"

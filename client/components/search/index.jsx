@@ -248,7 +248,6 @@ const Search = React.createClass( {
 		};
 
 		searchClass = classNames( this.props.additionalClasses, {
-			'is-pinned': this.props.pinned,
 			'is-open': isOpenUnpinnedOrQueried,
 			'is-searching': this.props.searching,
 			search: true

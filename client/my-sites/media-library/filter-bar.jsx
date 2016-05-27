@@ -114,6 +114,7 @@ module.exports = React.createClass( {
 					<Search
 						analyticsGroup="Media"
 						pinned={ true }
+						additionalClasses="is-expanded-to-container"
 						onSearch={ this.props.onSearch }
 						initialValue={ this.props.search }
 						placeholder={ this.getSearchPlaceholderText() }

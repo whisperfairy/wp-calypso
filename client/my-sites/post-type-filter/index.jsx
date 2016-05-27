@@ -128,6 +128,7 @@ const PostTypeFilter = React.createClass( {
 						<Search
 							key="search"
 							pinned={ true }
+							additionalClasses="is-expanded-to-container"
 							onSearch={ this.doSearch }
 							placeholder={ this.translate( 'Search…' ) }
 							delaySearch={ true } />

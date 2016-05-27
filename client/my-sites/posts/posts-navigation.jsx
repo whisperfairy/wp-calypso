@@ -129,6 +129,7 @@ export default React.createClass( {
 				}
 				<Search
 					pinned={ true }
+					additionalClasses="is-expanded-to-container"
 					onSearch={ this.doSearch }
 					initialValue={ this.props.search }
 					placeholder={ 'Search ' + statusTabs.selectedText + '...' }

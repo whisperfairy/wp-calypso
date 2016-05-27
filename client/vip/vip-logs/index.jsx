@@ -187,6 +187,7 @@ module.exports = React.createClass( {
 					</NavTabs>
 					<Search
 						pinned={ true }
+						additionalClasses="is-expanded-to-container"
 						onSearch={ this.doSearch }
 						initialValue={ this.props.search }
 						placeholder={ searchPlaceholder }

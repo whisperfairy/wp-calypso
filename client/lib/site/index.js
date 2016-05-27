@@ -69,6 +69,11 @@ Site.prototype.set = function( attributes ) {
 		}
 	}
 
+	// When a site icon is removed, the 'icon' prop is removed from the API result.
+	if ( this.icon && ! attributes.hasOwnProperty( 'icon' ) ) {
+		delete this.icon;
+	}
+
 	this.updateComputedAttributes();
 
 	if ( changed ) {

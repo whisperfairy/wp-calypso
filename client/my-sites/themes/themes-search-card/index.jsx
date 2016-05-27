@@ -46,10 +46,7 @@ const ThemesSearchCard = React.createClass( {
 	},
 
 	getInitialState() {
-		return {
-			isMobile: isMobile(),
-			isMobileSearchOpen: false
-		};
+		return { isMobile: isMobile() };
 	},
 
 	getSelectedTierFormatted( tiers ) {
@@ -71,15 +68,7 @@ const ThemesSearchCard = React.createClass( {
 		this.trackClick( 'more' );
 	},
 
-	onBlurMobile() {
-		console.log('onBlurMobile');
-		this.setState({
-			isMobileSearchOpen: false
-		});
-	},
-
 	renderMobile( tiers ) {
-		console.log('renderMobile');
 		const isJetpack = this.props.site && this.props.site.jetpack;
 		const isPremiumThemesEnabled = config.isEnabled( 'upgrades/premium-themes' );
 		const selectedTiers = isPremiumThemesEnabled ? tiers : [ tiers.find( tier => tier.value === 'free' ) ];
@@ -103,8 +92,6 @@ const ThemesSearchCard = React.createClass( {
 					<Search
 						pinned={ true }
 						onSearch={ this.props.onSearch }
-						isOpen={ this.state.isMobileSearchOpen }
-						onBlur={ this.onBlurMobile }
 						initialValue={ this.props.search }
 						ref="url-search"
 						placeholder={ this.translate( 'Search themes…' ) }
@@ -134,7 +121,6 @@ const ThemesSearchCard = React.createClass( {
 			<div className="themes__search-card">
 				<Search
 					onSearch={ this.props.onSearch }
-					isOpen= { true }
 					initialValue={ this.props.search }
 					ref="url-search"
 					placeholder={ this.translate( 'What kind of theme are you looking for?' ) }

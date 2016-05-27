@@ -403,7 +403,7 @@
       }
     },
     "caniuse-db": {
-      "version": "1.0.30000469"
+      "version": "1.0.30000470"
     },
     "caseless": {
       "version": "0.11.0"
@@ -784,6 +784,9 @@
     "doctypes": {
       "version": "1.0.0"
     },
+    "dom-helpers": {
+      "version": "2.4.0"
+    },
     "dom-scroll-into-view": {
       "version": "1.0.1"
     },
@@ -904,9 +907,6 @@
     },
     "es6-map": {
       "version": "0.1.3"
-    },
-    "es6-promise": {
-      "version": "2.3.0"
     },
     "es6-set": {
       "version": "0.1.4"
@@ -2562,6 +2562,9 @@
     "react-addons-linked-state-mixin": {
       "version": "0.14.3"
     },
+    "react-addons-shallow-compare": {
+      "version": "0.14.3"
+    },
     "react-addons-test-utils": {
       "version": "0.14.3"
     },
@@ -2621,6 +2624,20 @@
         },
         "fbjs": {
           "version": "0.2.1"
+        }
+      }
+    },
+    "react-virtualized": {
+      "version": "7.2.0",
+      "dependencies": {
+        "classnames": {
+          "version": "2.2.5"
+        },
+        "performance-now": {
+          "version": "0.2.0"
+        },
+        "raf": {
+          "version": "3.2.0"
         }
       }
     },
@@ -2779,17 +2796,8 @@
     "rtlcss": {
       "version": "2.0.5",
       "dependencies": {
-        "minimist": {
-          "version": "0.0.8"
-        },
-        "mkdirp": {
-          "version": "0.5.1"
-        },
-        "postcss": {
-          "version": "5.0.21"
-        },
-        "source-map": {
-          "version": "0.4.4"
+        "strip-json-comments": {
+          "version": "2.0.1"
         }
       }
     },

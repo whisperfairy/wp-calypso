@@ -8,7 +8,7 @@ import FollowButton from 'reader/follow-button';
 
 const StartCardFooter = ( { site } ) => {
 	return (
-		<footer>
+		<footer className="reader-start-card-footer">
 			<div className="reader-start-card__follower-count">{ site.subscribers_count } followers</div>
 			<FollowButton siteUrl={ site.URL } />
 		</footer>

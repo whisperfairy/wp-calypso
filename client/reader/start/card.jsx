@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import debugModule from 'debug';
 import get from 'lodash/get';
+import classnames from 'classnames';
 
 // Internal dependencies
 import Card from 'components/card';
@@ -16,8 +17,14 @@ const debug = debugModule( 'calypso:reader:start' ); //eslint-disable-line no-un
 const StartCard = ( { recommendation } ) => {
 	const siteId = get( recommendation, 'recommended_site_ID' );
 	const postId = get( recommendation, 'recommended_post_ID' );
+	const cardClasses = classnames(
+		'reader-start-card',
+		{
+			'has-post-preview': ( recommendation.recommended_post_ID > 0 )
+		}
+	);
 	return (
-		<Card className="reader-start-card">
+		<Card className={ cardClasses }>
 			<div className="reader-start-card__hero"></div>
 			<StartCardHeader siteId={ siteId } />
 			{ postId > 0 && <StartPostPreview siteId={ siteId } postId={ postId } /> }

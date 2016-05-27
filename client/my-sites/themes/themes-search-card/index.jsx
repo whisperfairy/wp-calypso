@@ -72,12 +72,14 @@ const ThemesSearchCard = React.createClass( {
 	},
 
 	onBlurMobile() {
-		this.setState( {
+		console.log('onBlurMobile');
+		this.setState({
 			isMobileSearchOpen: false
-		} );
+		});
 	},
 
 	renderMobile( tiers ) {
+		console.log('renderMobile');
 		const isJetpack = this.props.site && this.props.site.jetpack;
 		const isPremiumThemesEnabled = config.isEnabled( 'upgrades/premium-themes' );
 		const selectedTiers = isPremiumThemesEnabled ? tiers : [ tiers.find( tier => tier.value === 'free' ) ];

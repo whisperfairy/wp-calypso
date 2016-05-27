@@ -178,6 +178,7 @@ const ThemeSheet = React.createClass( {
 				</Card>
 				{ this.renderFeaturesCard() }
 				{ this.renderDownload() }
+				{ this.renderRelatedThemes() }
 			</div>
 		);
 	},
@@ -238,6 +239,14 @@ const ThemeSheet = React.createClass( {
 			return null;
 		}
 		return <ThemeDownloadCard theme={ this.props.id } href={ this.props.download } />;
+	},
+
+	renderRelatedThemes() {
+		return (
+			<div>
+				<SectionHeader label={ i18n.translate( 'You might also like' ) } />
+			</div>
+		);
 	},
 
 	render() {

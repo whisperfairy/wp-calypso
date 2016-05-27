@@ -40,6 +40,7 @@ const authURL = '/wp-admin/admin.php?page=jetpack&connect_url_redirect=true&caly
 const installURL = '/wp-admin/plugin-install.php?tab=plugin-information&plugin=jetpack';
 const activateURL = '/wp-admin/plugins.php';
 const userModule = userFactory();
+const jetpackUrl = 'http://jetpack.wordpress.com';
 const tracksEvent = ( dispatch, eventName, props ) => {
 	setTimeout( () => {
 		dispatch( recordTracksEvent( eventName, props ) );
@@ -151,7 +152,7 @@ export default {
 				url: url,
 				type: 'remote_auth'
 			} );
-			window.location = url + authURL;
+			window.location = jetpackUrl + '/jetpack.redirect/1/1?url=' + encodeURIComponent( url + authURL );
 		};
 	},
 	goToPluginInstall( url ) {
@@ -164,7 +165,7 @@ export default {
 				url: url,
 				type: 'plugin_install'
 			} );
-			window.location = url + installURL;
+			window.location = jetpackUrl + '/jetpack.redirect/1/1?url=' + encodeURIComponent( url + installURL );
 		};
 	},
 	goToPluginActivation( url ) {
@@ -177,7 +178,7 @@ export default {
 				url: url,
 				type: 'plugin_activation'
 			} );
-			window.location = url + activateURL;
+			window.location = jetpackUrl + '/jetpack.redirect/1/1?url=' + encodeURIComponent( url + activateURL );
 		};
 	},
 	goBackToWpAdmin( url ) {

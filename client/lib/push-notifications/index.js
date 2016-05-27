@@ -178,7 +178,7 @@ PushNotifications.prototype.subscribe = function( callback ) {
 
 PushNotifications.prototype.unsubscribe = function( callback ) {
 	if ( 'serviceWorker' in window.navigator ) {
-		store.clear( 'push-subscription-intent' );
+		store.remove( 'push-subscription-intent' );
 		window.navigator.serviceWorker.ready.then( ( serviceWorkerRegistration ) => {
 			serviceWorkerRegistration.pushManager.getSubscription().then( ( pushSubscription ) => {
 				if ( ! pushSubscription ) {

@@ -134,7 +134,7 @@ const FollowingEdit = React.createClass( {
 		}
 
 		return subscriptions.sortBy( function( subscription ) {
-			return subscription.get( 'date_subscribed' )
+			return subscription.get( 'date_subscribed' );
 		} ).reverse();
 	},
 

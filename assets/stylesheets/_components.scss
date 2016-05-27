@@ -370,3 +370,12 @@
 @import 'signup/validation-fieldset/style';
 @import 'support/support-user/style';
 @import 'vip/vip-logs/style';
+
+// ==========================================================================
+// External Dependencies
+//
+// These are styles which are required by external dependencies. Please keep
+// these imports sorted.
+// ==========================================================================
+
+@import '../../node_modules/react-virtualized/styles';

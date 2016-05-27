@@ -89,6 +89,24 @@ export function isRequestingSitePostsForQuery( state, siteId, query ) {
 }
 
 /**
+ * Returns the total number of items reported to be found for the given query,
+ * or null if the total number of queryable posts if unknown.
+ *
+ * @param  {Object}  state  Global state tree
+ * @param  {Number}  siteId Site ID
+ * @param  {Object}  query  Post query object
+ * @return {?Number}        Total number of found items
+ */
+export function getSitePostsFoundForQuery( state, siteId, query ) {
+	const serializedQuery = getSerializedPostsQueryWithoutPage( query, siteId );
+	if ( ! state.posts.queriesFound.hasOwnProperty( serializedQuery ) ) {
+		return null;
+	}
+
+	return state.posts.queriesFound[ serializedQuery ];
+}
+
+/**
  * Returns the last queryable page of posts for the given query, or null if the
  * total number of queryable posts if unknown.
  *
@@ -98,8 +116,12 @@ export function isRequestingSitePostsForQuery( state, siteId, query ) {
  * @return {?Number}        Last posts page
  */
 export function getSitePostsLastPageForQuery( state, siteId, query ) {
-	const serializedQuery = getSerializedPostsQueryWithoutPage( query, siteId );
-	return state.posts.queriesLastPage[ serializedQuery ] || null;
+	const found = getSitePostsFoundForQuery( state, siteId, query );
+	if ( null === found ) {
+		return null;
+	}
+
+	return Math.ceil( found / ( query.number || DEFAULT_POST_QUERY.number ) );
 }
 
 /**

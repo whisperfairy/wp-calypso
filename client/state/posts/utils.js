@@ -41,7 +41,7 @@ export function getSerializedPostsQuery( query = {}, siteId ) {
 
 /**
  * Returns a serialized posts query, excluding any page parameter, used as the
- * key in the `state.posts.queriesLastPage` state object.
+ * key in the `state.posts.queriesFound` state object.
  *
  * @param  {Object} query  Posts query
  * @param  {Number} siteId Optional site ID

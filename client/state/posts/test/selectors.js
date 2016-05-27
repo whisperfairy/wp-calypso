@@ -12,6 +12,7 @@ import {
 	getSitePost,
 	getSitePostsForQuery,
 	isRequestingSitePostsForQuery,
+	getSitePostsFoundForQuery,
 	getSitePostsLastPageForQuery,
 	isSitePostsLastPageForQuery,
 	getSitePostsForQueryIgnoringPage,
@@ -182,11 +183,47 @@ describe( 'selectors', () => {
 		} );
 	} );
 
+	describe( 'getSitePostsFoundForQuery()', () => {
+		it( 'should return null if the site query is not tracked', () => {
+			const found = getSitePostsFoundForQuery( {
+				posts: {
+					queriesFound: {}
+				}
+			}, 2916284, { search: 'Hello' } );
+
+			expect( found ).to.be.null;
+		} );
+
+		it( 'should return the found items for a site query', () => {
+			const found = getSitePostsFoundForQuery( {
+				posts: {
+					queriesFound: {
+						'2916284:{"search":"hello"}': 67
+					}
+				}
+			}, 2916284, { search: 'Hello' } );
+
+			expect( found ).to.equal( 67 );
+		} );
+
+		it( 'should return zero if in-fact there are zero items', () => {
+			const found = getSitePostsFoundForQuery( {
+				posts: {
+					queriesFound: {
+						'2916284:{"search":"hello"}': 0
+					}
+				}
+			}, 2916284, { search: 'Hello' } );
+
+			expect( found ).to.equal( 0 );
+		} );
+	} );
+
 	describe( '#getSitePostsLastPageForQuery()', () => {
 		it( 'should return null if the site query is not tracked', () => {
 			const lastPage = getSitePostsLastPageForQuery( {
 				posts: {
-					queriesLastPage: {}
+					queriesFound: {}
 				}
 			}, 2916284, { search: 'Hello' } );
 
@@ -196,8 +233,8 @@ describe( 'selectors', () => {
 		it( 'should return the last page value for a site query', () => {
 			const lastPage = getSitePostsLastPageForQuery( {
 				posts: {
-					queriesLastPage: {
-						'2916284:{"search":"hello"}': 4
+					queriesFound: {
+						'2916284:{"search":"hello"}': 67
 					}
 				}
 			}, 2916284, { search: 'Hello' } );
@@ -208,8 +245,8 @@ describe( 'selectors', () => {
 		it( 'should return the last page value for a site query, even if including page param', () => {
 			const lastPage = getSitePostsLastPageForQuery( {
 				posts: {
-					queriesLastPage: {
-						'2916284:{"search":"hello"}': 4
+					queriesFound: {
+						'2916284:{"search":"hello"}': 67
 					}
 				}
 			}, 2916284, { search: 'Hello', page: 3 } );
@@ -222,7 +259,7 @@ describe( 'selectors', () => {
 		it( 'should return null if the last page is not known', () => {
 			const isLastPage = isSitePostsLastPageForQuery( {
 				posts: {
-					queriesLastPage: {}
+					queriesFound: {}
 				}
 			}, 2916284, { search: 'Hello' } );
 
@@ -232,7 +269,7 @@ describe( 'selectors', () => {
 		it( 'should return false if the query explicit value is not the last page', () => {
 			const isLastPage = isSitePostsLastPageForQuery( {
 				posts: {
-					queriesLastPage: {
+					queriesFound: {
 						'2916284:{"search":"hello"}': 4
 					}
 				}
@@ -244,8 +281,8 @@ describe( 'selectors', () => {
 		it( 'should return true if the query explicit value is the last page', () => {
 			const isLastPage = isSitePostsLastPageForQuery( {
 				posts: {
-					queriesLastPage: {
-						'2916284:{"search":"hello"}': 4
+					queriesFound: {
+						'2916284:{"search":"hello"}': 67
 					}
 				}
 			}, 2916284, { search: 'Hello', page: 4 } );
@@ -256,7 +293,7 @@ describe( 'selectors', () => {
 		it( 'should return true if the query implicit value is the last page', () => {
 			const isLastPage = isSitePostsLastPageForQuery( {
 				posts: {
-					queriesLastPage: {
+					queriesFound: {
 						'2916284:{"search":"hello"}': 1
 					}
 				}
@@ -270,7 +307,7 @@ describe( 'selectors', () => {
 		it( 'should return null if the last page is not known', () => {
 			const isLastPage = isSitePostsLastPageForQuery( {
 				posts: {
-					queriesLastPage: {}
+					queriesFound: {}
 				}
 			}, 2916284, { search: 'Hello' } );
 
@@ -288,7 +325,7 @@ describe( 'selectors', () => {
 						'2916284:{"number":1}': [ '3d097cb7c5473c169bba0eb8e3c6cb64' ],
 						'2916284:{"number":1,"page":2}': [ '6c831c187ffef321eb43a67761a525a3' ]
 					},
-					queriesLastPage: {
+					queriesFound: {
 						'2916284:{"number":1}': 2
 					}
 				}
@@ -309,7 +346,7 @@ describe( 'selectors', () => {
 		it( 'should return null if the last page is not known', () => {
 			const isLastPage = isSitePostsLastPageForQuery( {
 				posts: {
-					queriesLastPage: {}
+					queriesFound: {}
 				}
 			}, 2916284, { search: 'Hello' } );
 
@@ -329,7 +366,7 @@ describe( 'selectors', () => {
 						'2916284:{"number":1,"page":2}': [ '6c831c187ffef321eb43a67761a525a3' ],
 						'2916284:{"number":1,"page":3}': [ 'f0cb4eb16f493c19b627438fdc18d57c' ]
 					},
-					queriesLastPage: {
+					queriesFound: {
 						'2916284:{"number":1}': 3
 					}
 				}

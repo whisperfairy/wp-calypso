@@ -25,7 +25,7 @@ import reducer, {
 	items,
 	queryRequests,
 	queries,
-	queriesLastPage,
+	queriesFound,
 	siteRequests,
 	edits
 } from '../reducer';
@@ -46,7 +46,7 @@ describe( 'reducer', () => {
 			'siteRequests',
 			'queryRequests',
 			'queries',
-			'queriesLastPage',
+			'queriesFound',
 			'edits'
 		] );
 	} );
@@ -318,15 +318,15 @@ describe( 'reducer', () => {
 		} );
 	} );
 
-	describe( '#queriesLastPage()', () => {
+	describe( '#queriesFound()', () => {
 		it( 'should default to an empty object', () => {
-			const state = queriesLastPage( undefined, {} );
+			const state = queriesFound( undefined, {} );
 
 			expect( state ).to.eql( {} );
 		} );
 
-		it( 'should track post query request success last page', () => {
-			const state = queriesLastPage( undefined, {
+		it( 'should track post query request success found', () => {
+			const state = queriesFound( undefined, {
 				type: POSTS_REQUEST_SUCCESS,
 				siteId: 2916284,
 				query: { search: '', number: 1 },
@@ -341,8 +341,8 @@ describe( 'reducer', () => {
 			} );
 		} );
 
-		it( 'should track last page without specified site', () => {
-			const state = queriesLastPage( undefined, {
+		it( 'should track found without specified site', () => {
+			const state = queriesFound( undefined, {
 				type: POSTS_REQUEST_SUCCESS,
 				query: { search: '', number: 1 },
 				found: 2,
@@ -356,8 +356,8 @@ describe( 'reducer', () => {
 			} );
 		} );
 
-		it( 'should track last page regardless of page param', () => {
-			const state = queriesLastPage( undefined, {
+		it( 'should track found regardless of page param', () => {
+			const state = queriesFound( undefined, {
 				type: POSTS_REQUEST_SUCCESS,
 				siteId: 2916284,
 				query: { search: '', number: 1, page: 2 },
@@ -372,25 +372,11 @@ describe( 'reducer', () => {
 			} );
 		} );
 
-		it( 'should consider no results as having last page of 1', () => {
-			const state = queriesLastPage( undefined, {
-				type: POSTS_REQUEST_SUCCESS,
-				siteId: 2916284,
-				query: { search: 'none', number: 1 },
-				found: 0,
-				posts: []
-			} );
-
-			expect( state ).to.eql( {
-				'2916284:{"search":"none","number":1}': 1
-			} );
-		} );
-
 		it( 'should accumulate site post request success', () => {
 			const original = deepFreeze( {
 				'2916284:{"search":"hello"}': 1
 			} );
-			const state = queriesLastPage( original, {
+			const state = queriesFound( original, {
 				type: POSTS_REQUEST_SUCCESS,
 				siteId: 2916284,
 				query: { search: 'Ribs' },
@@ -410,7 +396,7 @@ describe( 'reducer', () => {
 			const original = deepFreeze( {
 				'2916284:{"search":"hello"}': 1
 			} );
-			const state = queriesLastPage( original, { type: SERIALIZE } );
+			const state = queriesFound( original, { type: SERIALIZE } );
 			expect( state ).to.eql( {} );
 		} );
 
@@ -418,7 +404,7 @@ describe( 'reducer', () => {
 			const original = deepFreeze( {
 				'2916284:{"search":"hello"}': 1
 			} );
-			const state = queriesLastPage( original, { type: DESERIALIZE } );
+			const state = queriesFound( original, { type: DESERIALIZE } );
 			expect( state ).to.eql( {} );
 		} );
 	} );

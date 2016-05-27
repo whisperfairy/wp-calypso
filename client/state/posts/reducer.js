@@ -150,15 +150,14 @@ export function queries( state = {}, action ) {
  * @param  {Object} action Action payload
  * @return {Object}        Updated state
  */
-export function queriesLastPage( state = {}, action ) {
+export function queriesFound( state = {}, action ) {
 	switch ( action.type ) {
 		case POSTS_REQUEST_SUCCESS:
 			const { siteId, found } = action;
 			const serializedQuery = getSerializedPostsQueryWithoutPage( action.query, siteId );
-			const lastPage = Math.ceil( found / ( action.query.number || DEFAULT_POST_QUERY.number ) );
 
 			return Object.assign( {}, state, {
-				[ serializedQuery ]: Math.max( lastPage, 1 )
+				[ serializedQuery ]: found
 			} );
 
 		case SERIALIZE:
@@ -223,6 +222,6 @@ export default combineReducers( {
 	siteRequests,
 	queryRequests,
 	queries,
-	queriesLastPage,
+	queriesFound,
 	edits
 } );

@@ -5,6 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import debugModule from 'debug';
+import get from 'lodash/get';
 
 /**
  * Internal dependencies
@@ -114,8 +115,14 @@ const JetpackSSOForm = React.createClass( {
 			<Main className="jetpack-connect">
 				<div className="jetpack-connect__sso">
 					<ConnectHeader
-						headerText="Connect with WordPress.com"
-						subHeaderText="To use Single Sign-On, WordPress.com needs to be able to connect to your account on {$site}"
+						headerText={ this.translate( 'Connect with WordPress.com' ) }
+						subHeaderText={ this.translate(
+							'To use Single Sign-On, WordPress.com needs to be able to connect to your account on %(siteName)s', {
+								args: {
+									siteName: get( this.props, 'blogDetails.title' )
+								}
+							}
+						) }
 					/>
 
 					<Card>
@@ -148,10 +155,12 @@ const JetpackSSOForm = React.createClass( {
 					</Card>
 
 					<LoggedOutFormLinks>
-						<LoggedOutFormLinkItem onClick={ this.onCancelClick } >
+						<LoggedOutFormLinkItem
+							href={ get( this.props, 'blogDetails.admin_url', null ) }
+							onClick={ this.onCancelClick }>
 							{ this.translate( 'Return to %(siteName)s', {
 								args: {
-									siteName: '{$site}'
+									siteName: get( this.props, 'blogDetails.title' )
 								}
 							} ) }
 						</LoggedOutFormLinkItem>

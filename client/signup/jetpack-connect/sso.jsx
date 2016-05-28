@@ -5,7 +5,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import debugModule from 'debug';
-import get from 'lodash/get';
 
 /**
  * Internal dependencies
@@ -165,17 +164,7 @@ const JetpackSSOForm = React.createClass( {
 
 export default connect(
 	state => {
-		const { jetpackSSO } = state.jetpackConnect;
-		return {
-			siteId: get( jetpackSSO, 'site_id' ),
-			ssoNonce: get( jetpackSSO, 'sso_nonce' ),
-			ssoUrl: get( jetpackSSO, 'ssoUrl' ),
-			isAuthorizing: get( jetpackSSO, 'isAuthorizing' ),
-			isValidating: get( jetpackSSO, 'isValidating' ),
-			nonceValid: get( jetpackSSO, 'nonceValid' ),
-			authorizationError: get( jetpackSSO, 'authorizationError' ),
-			validationError: get( jetpackSSO, 'validationError' ),
-		};
+		return state.jetpackConnect.jetpackSSO;
 	},
 	dispatch => bindActionCreators( { errorNotice, authorizeSSO, validateSSONonce }, dispatch )
 )( JetpackSSOForm );

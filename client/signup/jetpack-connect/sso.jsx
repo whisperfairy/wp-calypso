@@ -18,7 +18,6 @@ import Gravatar from 'components/gravatar';
 import Button from 'components/button';
 import LoggedOutFormLinks from 'components/logged-out-form/links';
 import LoggedOutFormLinkItem from 'components/logged-out-form/link-item';
-import { errorNotice } from 'state/notices/actions';
 import { validateSSONonce, authorizeSSO } from 'state/jetpack-connect/actions';
 import addQueryArgs from 'lib/route/add-query-args';
 import config from 'config';
@@ -64,7 +63,6 @@ const JetpackSSOForm = React.createClass( {
 	onCancelClick( event ) {
 		event.preventDefault();
 		debug( 'Clicked return to site link' );
-		this.props.errorNotice( 'Jetpack SSO is currently in development.' );
 	},
 
 	isButtonDisabled() {
@@ -175,5 +173,5 @@ export default connect(
 	state => {
 		return state.jetpackConnect.jetpackSSO;
 	},
-	dispatch => bindActionCreators( { errorNotice, authorizeSSO, validateSSONonce }, dispatch )
+	dispatch => bindActionCreators( { authorizeSSO, validateSSONonce }, dispatch )
 )( JetpackSSOForm );
